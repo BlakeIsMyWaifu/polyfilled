@@ -8,6 +8,15 @@ interface Theme {
 			iconsActive: HexColour;
 			iconsInactive: HexColour;
 		};
+		sideBar: {
+			background: HexColour;
+			headerText: HexColour;
+			accordion: {
+				headerText: HexColour;
+				contentText: HexColour;
+				border: HexColour;
+			};
+		};
 	};
 }
 
@@ -18,6 +27,15 @@ const themeDarkPlus: Theme = {
 			background: '#333333',
 			iconsActive: '#ffffff',
 			iconsInactive: '#ffffff66'
+		},
+		sideBar: {
+			background: '#252526',
+			headerText: '#bbbbbb',
+			accordion: {
+				headerText: '#ffffff',
+				contentText: '#ffffff',
+				border: '#cccccc33'
+			}
 		}
 	}
 }

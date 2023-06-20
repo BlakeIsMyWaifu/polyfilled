@@ -1,6 +1,8 @@
+import { type ReactElement } from 'react'
 import { VscFiles, VscGithub, VscSearch, VscSettingsGear, VscSourceControl } from 'react-icons/vsc'
 import styled from 'styled-components'
 
+import { type Sidebar, useApplicationStore } from '~/state/useApplicationStore'
 import themeDarkPlus from '~/themes/darkplus'
 
 const ActivityBarContainer = styled.div`
@@ -17,10 +19,10 @@ const ActivityBar = () => {
 	return (
 		<ActivityBarContainer>
 			<IconGroup>
-				<Icon icon={<VscFiles size='28px' />} />
-				<Icon icon={<VscSearch size='28px' />} />
-				<Icon icon={<VscSourceControl size='28px' />} />
-				<Icon icon={<VscGithub size='28px' />} />
+				<Icon title='explorer' icon={<VscFiles size='28px' />} />
+				<Icon title='search' icon={<VscSearch size='28px' />} />
+				<Icon title='sourceControl' icon={<VscSourceControl size='28px' />} />
+				<Icon title='github' icon={<VscGithub size='28px' />} />
 			</IconGroup>
 			<IconGroup>
 				<Icon icon={<VscSettingsGear size='28px' />} />
@@ -29,26 +31,46 @@ const ActivityBar = () => {
 	)
 }
 
-const IconWrapper = styled.div`
+interface IconWrapperProps {
+	isActive: boolean;
+}
+
+const IconWrapper = styled.div<IconWrapperProps>`
+	position: relative;
 	width: 48px;
 	height: 48px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: ${themeDarkPlus.colours.activityBar.iconsInactive};
+	color: ${props => themeDarkPlus.colours.activityBar[props.isActive ? 'iconsActive' : 'iconsInactive']};
 	cursor: pointer;
 	&:hover {
 		color: ${themeDarkPlus.colours.activityBar.iconsActive};
 	}
+	&::before {
+		content: "";
+		display: block;
+		width: ${props => props.isActive ? '2px': '0'};
+		height: 48px;
+		background: ${themeDarkPlus.colours.activityBar.iconsActive};
+		left: 0;
+		top: 0;
+		position: absolute;
+	}
 `
 
 interface IconProps {
-	icon: JSX.Element;
+	icon: ReactElement;
+	title?: Sidebar;
 }
 
-const Icon = ({ icon }: IconProps) => {
+const Icon = ({ icon, title }: IconProps) => {
+
+	const currentSide = useApplicationStore(state => state.currentSidebar)
+	const changeSidebar = useApplicationStore(state => state.changeSidebar)
+
 	return (
-		<IconWrapper>
+		<IconWrapper isActive={currentSide === title} onClick={() => title && changeSidebar(title)}>
 			{icon}
 		</IconWrapper>
 	)

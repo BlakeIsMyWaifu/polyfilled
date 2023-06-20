@@ -35,4 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 coverage-ts
-.vscode/settings
+.vscode/settings.json

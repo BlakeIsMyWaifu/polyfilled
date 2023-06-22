@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import ActivityBar from '~/components/ActivityBar'
 import Sidebar from '~/components/Sidebar'
+import TabBar from '~/components/TabBar'
 import { GlobalStyle } from '~/styles/GlobalStyle'
 
 const AppContainer = styled.div`
@@ -24,7 +25,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 		<>
 			<AppContainer>
 				<ActivityBar />
-				<Sidebar/>
+				<Sidebar />
+				<TabBar />
 				<Component {...pageProps} />
 			</AppContainer>
 

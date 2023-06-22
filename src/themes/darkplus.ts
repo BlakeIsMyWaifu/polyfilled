@@ -17,6 +17,13 @@ interface Theme {
 				border: HexColour;
 			};
 		};
+		tabBar: {
+			background: HexColour;
+			activeTabBackground: HexColour;
+			activeTabText: HexColour;
+			inactiveTabBackground: HexColour;
+			inactiveTabText: HexColour;
+		};
 	};
 }
 
@@ -36,6 +43,13 @@ const themeDarkPlus: Theme = {
 				contentText: '#ffffff',
 				border: '#cccccc33'
 			}
+		},
+		tabBar: {
+			background: '#252526',
+			activeTabBackground: '#1e1e1e',
+			activeTabText: '#ffffff',
+			inactiveTabBackground: '#2d2d2d',
+			inactiveTabText: '#ffffff80'
 		}
 	}
 }

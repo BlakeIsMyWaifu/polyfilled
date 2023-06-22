@@ -13,11 +13,13 @@ const Github = () => {
 	return (
 		<>
 			<Accordion
+				isTop
 				title={'pull requests'}
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
 			/>
 			<Accordion
+				isBottom
 				title={'issues'}
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}

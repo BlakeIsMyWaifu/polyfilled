@@ -12,8 +12,9 @@ const Explorer = () => {
 	const [currentAccordion, setCurrentAccordion] = useState<ExplorerAccordionTitle | null>('polyfilled')
 
 	return (
-		<>
+		<div>
 			<Accordion
+				isTop
 				title='polyfilled'
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
@@ -24,11 +25,12 @@ const Explorer = () => {
 				setCurrentAccordion={setCurrentAccordion}
 			/>
 			<Accordion
+				isBottom
 				title={'open editors'}
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
 			/>
-		</>
+		</div>
 	)
 }
 

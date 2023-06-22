@@ -17,7 +17,7 @@ const SidebarContainer = styled.div`
 
 const SidebarHeader = styled.p`
 	color: ${themeDarkPlus.colours.sideBar.headerText};
-	padding: 8px 20px;
+	padding: 10px 20px;
 	font-size: 0.8em;
 `
 

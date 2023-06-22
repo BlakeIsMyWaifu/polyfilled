@@ -1,9 +1,13 @@
-import { styled } from 'styled-components'
+import { type ReactElement } from 'react'
+import styled from 'styled-components'
 
-import { useApplicationStore } from '~/state/useApplicationStore'
+import { type SidebarSection, useApplicationStore } from '~/state/useApplicationStore'
 import themeDarkPlus from '~/themes/darkplus'
 
-import Accordion from './Accordion'
+import Explorer from './sections/Explorer'
+import Github from './sections/Github'
+import Search from './sections/Search'
+import SourceControl from './sections/SourceControl'
 
 const SidebarContainer = styled.div`
 	grid-area: sidebar;
@@ -17,6 +21,13 @@ const SidebarHeader = styled.p`
 	font-size: 0.8em;
 `
 
+const sections: Record<SidebarSection, ReactElement> = {
+	explorer: <Explorer />,
+	search: <Search />,
+	sourceControl: <SourceControl />,
+	github: <Github />
+}
+
 const Sidebar = () => {
 
 	const currentSidebar = useApplicationStore(state => state.currentSidebar)
@@ -24,14 +35,7 @@ const Sidebar = () => {
 	return (
 		<SidebarContainer>
 			<SidebarHeader>{currentSidebar.toUpperCase()}</SidebarHeader>
-
-			<Accordion title='Polyfilled'>
-				test text
-			</Accordion>
-			<Accordion title='Outline'>
-				<p>More Text To Test With</p>
-			</Accordion>
-
+			{sections[currentSidebar]}
 		</SidebarContainer>
 	)
 }

@@ -5,14 +5,14 @@ import { createActionName, type Slice } from '~/types/storeTypes'
 
 // State
 
-export type Sidebar =
+export type SidebarSection =
 	| 'explorer'
 	| 'search'
 	| 'sourceControl'
 	| 'github'
 
 interface ApplicationState {
-	currentSidebar: Sidebar;
+	currentSidebar: SidebarSection;
 }
 
 const applicationState: ApplicationState = {
@@ -22,7 +22,7 @@ const applicationState: ApplicationState = {
 // Action
 
 interface ApplicationAction {
-	changeSidebar: (sidebar: Sidebar) => void;
+	changeSidebar: (sidebar: SidebarSection) => void;
 }
 
 const actionName = createActionName<keyof ApplicationAction>('application')

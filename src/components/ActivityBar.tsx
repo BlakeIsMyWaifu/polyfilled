@@ -2,7 +2,7 @@ import { type ReactElement } from 'react'
 import { VscFiles, VscGithub, VscSearch, VscSettingsGear, VscSourceControl } from 'react-icons/vsc'
 import styled from 'styled-components'
 
-import { type Sidebar, useApplicationStore } from '~/state/useApplicationStore'
+import { type SidebarSection, useApplicationStore } from '~/state/useApplicationStore'
 import themeDarkPlus from '~/themes/darkplus'
 
 const ActivityBarContainer = styled.div`
@@ -50,7 +50,7 @@ const IconWrapper = styled.div<IconWrapperProps>`
 	&::before {
 		content: "";
 		display: block;
-		width: ${props => props.isActive ? '2px': '0'};
+		width: ${props => props.isActive ? '2px' : '0'};
 		height: 48px;
 		background: ${themeDarkPlus.colours.activityBar.iconsActive};
 		left: 0;
@@ -61,7 +61,7 @@ const IconWrapper = styled.div<IconWrapperProps>`
 
 interface IconProps {
 	icon: ReactElement;
-	title?: Sidebar;
+	title?: SidebarSection;
 }
 
 const Icon = ({ icon, title }: IconProps) => {

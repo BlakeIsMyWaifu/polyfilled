@@ -1,12 +1,20 @@
 import { allPosts } from 'contentlayer/generated'
 import { type GetStaticPathsContext, type InferGetStaticPropsType, type NextPage } from 'next'
+import Link from 'next/link'
+import { useMDXComponent } from 'next-contentlayer/hooks'
 
 type BlogSlugProps = InferGetStaticPropsType<typeof getStaticProps>
 
 const BlogSlug: NextPage<BlogSlugProps> = ({ post }: BlogSlugProps) => {
 
+	const MDXContent = useMDXComponent(post.body.code)
+
 	return (
-		<article dangerouslySetInnerHTML={{ __html: post.body.html }} />
+		<article>
+			<Link href={'/'}>home</Link>
+
+			<MDXContent />
+		</article>
 	)
 }
 
@@ -17,8 +25,11 @@ interface StaticProps extends GetStaticPathsContext {
 }
 
 export const getStaticProps = ({ params: { slug } }: StaticProps) => {
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const post = allPosts.find(post => post._raw.flattenedPath === slug)!
+	const post = allPosts.find(post => post._raw.flattenedPath === slug)
+
+	if (!post) return {
+		notFound: true
+	}
 
 	return {
 		props: {
@@ -32,7 +43,7 @@ export const getStaticPaths = () => {
 		.filter(post => post.draft)
 		.map(post => ({
 			params: {
-				slug: post.slug
+				slug: post._raw.flattenedPath
 			}
 		}))
 

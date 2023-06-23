@@ -6,7 +6,10 @@
     "dev": "run-p dev:*",
     "dev:next": "next dev",
     "dev:browser": "pnpm run open-browser",
-    "build": "next build",
+    "dev:contentlayer": "contentlayer dev",
+    "build": "run-s build:*",
+    "build:1-contentlayer": "contentlayer build",
+    "build:2-next": "next build",
     "start": "next start",
     "lint": "next lint",
     "open-browser": "start http://localhost:3000",
@@ -16,7 +19,9 @@
     "ts-coverage": "typescript-coverage-report"
   },
   "dependencies": {
+    "contentlayer": "^0.3.3",
     "next": "13.4.6",
+    "next-contentlayer": "^0.3.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",

@@ -37,3 +37,7 @@ next-env.d.ts
 coverage-ts
 .vscode/settings.json
 .vscode/tasks.json
+.frontmatter
+
+# Contentlayer
+.contentlayer

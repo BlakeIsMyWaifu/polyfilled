@@ -1,6 +1,7 @@
 // @ts-check
 
 import NextBundleAnalyzer from '@next/bundle-analyzer'
+import { withContentlayer } from 'next-contentlayer'
 
 const withBundleAnalyzer = NextBundleAnalyzer({
 	enabled: process.env.ANALYZE === 'true'
@@ -19,4 +20,4 @@ const nextConfig = {
 	}
 }
 
-export default withBundleAnalyzer(nextConfig)
+export default withContentlayer(withBundleAnalyzer(nextConfig))

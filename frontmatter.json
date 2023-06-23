@@ -1,0 +1,99 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "default",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Publishing date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "required": true
+        },
+        {
+          "title": "Authors",
+          "name": "authors",
+          "type": "taxonomy",
+          "taxonomyId": "authors",
+          "required": true
+        },
+        {
+          "title": "Content preview",
+          "name": "preview",
+          "type": "image"
+        },
+        {
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "Slug",
+          "name": "slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Summary",
+          "name": "summary",
+          "type": "string"
+        },
+        {
+          "title": "Images",
+          "name": "images",
+          "type": "list"
+        }
+      ]
+    }
+  ],
+  "frontMatter.framework.id": "next",
+  "frontMatter.content.publicFolder": "public",
+  "frontMatter.preview.host": "http://localhost:3000",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "posts",
+      "path": "[[workspace]]/posts"
+    }
+  ],
+  "frontMatter.taxonomy.customTaxonomy": [
+    {
+      "id": "authors",
+      "options": [
+        "Joel Dohm-Karatjas",
+        "Ishaan"
+      ]
+    }
+  ],
+  "frontMatter.taxonomy.tags": [
+    "typescript"
+  ],
+  "frontMatter.taxonomy.categories": [
+    "blog"
+  ]
+}

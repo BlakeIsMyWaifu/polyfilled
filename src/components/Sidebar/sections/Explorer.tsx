@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import Accordion from '../Accordion'
+import FileAccordionInner from './FileAccordion'
 
 type ExplorerAccordionTitle =
 	| 'polyfilled'
@@ -18,7 +19,33 @@ const Explorer = () => {
 				title='polyfilled'
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
-			/>
+			>
+				<FileAccordionInner
+					filename='pages'
+					childFiles={[
+						{
+							filename: 'blog',
+							childFiles: [
+								{
+									filename: 'one',
+									fileExtension: 'md',
+									link: '/en/blog/2023-06-23-first-test-blog'
+								},
+								{
+									filename: 'two',
+									fileExtension: 'md',
+									link: '/en/blog/2023-06-23-first-test-blog'
+								}
+							]
+						},
+						{
+							filename: 'index',
+							fileExtension: 'tsx',
+							link: '/'
+						}
+					]}
+				/>
+			</Accordion>
 			<Accordion
 				title={'outline'}
 				currentAccordion={currentAccordion}

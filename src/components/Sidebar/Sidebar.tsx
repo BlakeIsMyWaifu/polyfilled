@@ -13,6 +13,8 @@ const SidebarContainer = styled.div`
 	grid-area: sidebar;
 	width: 256px;
 	background-color: ${themeDarkPlus.colours.sideBar.background};
+	display: flex;
+	flex-direction: column;
 `
 
 const SidebarHeader = styled.p`

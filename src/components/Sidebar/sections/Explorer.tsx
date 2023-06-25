@@ -1,7 +1,16 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import styled from 'styled-components'
+
+import { trpc } from '~/utils/trpc'
 
 import Accordion from '../Accordion'
 import FileAccordionInner from './FileAccordion'
+
+const Accordions = styled.div`
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+`
 
 type ExplorerAccordionTitle =
 	| 'polyfilled'
@@ -10,10 +19,23 @@ type ExplorerAccordionTitle =
 
 const Explorer = () => {
 
+	const { data: allPosts } = trpc.posts.getAllPostSlugs.useQuery(undefined, {
+		staleTime: Infinity
+	})
+
+	const blogChildFiles = useMemo(() => {
+		if (!allPosts) return []
+		return allPosts.map(({ params: { slug } }) => ({
+			filename: slug,
+			fileExtension: 'md',
+			link: `/en/blog/${slug}`
+		}) as const)
+	}, [allPosts])
+
 	const [currentAccordion, setCurrentAccordion] = useState<ExplorerAccordionTitle | null>('polyfilled')
 
 	return (
-		<div>
+		<Accordions>
 			<Accordion
 				isTop
 				title='polyfilled'
@@ -25,18 +47,7 @@ const Explorer = () => {
 					childFiles={[
 						{
 							filename: 'blog',
-							childFiles: [
-								{
-									filename: 'one',
-									fileExtension: 'md',
-									link: '/en/blog/2023-06-23-first-test-blog'
-								},
-								{
-									filename: 'two',
-									fileExtension: 'md',
-									link: '/en/blog/2023-06-23-first-test-blog'
-								}
-							]
+							childFiles: blogChildFiles
 						},
 						{
 							filename: 'index',
@@ -57,7 +68,7 @@ const Explorer = () => {
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
 			/>
-		</div>
+		</Accordions>
 	)
 }
 

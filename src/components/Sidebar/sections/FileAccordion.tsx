@@ -48,7 +48,7 @@ interface FileAccordionPropsFolder extends FileAccordionPropsBase {
 	childFiles: FileAccordionProps[];
 }
 
-interface FileAccordionPropsFile extends FileAccordionPropsBase {
+ interface FileAccordionPropsFile extends FileAccordionPropsBase {
 	fileExtension: FileExtension;
 	link: string;
 }
@@ -124,11 +124,13 @@ const Folder = ({ filename, depth, childFiles = [] }: FolderProps) => {
 				isOpen && childFiles.map(file => {
 					return isFolder(file)
 						? <Folder
+							key={file.filename}
 							filename={file.filename}
 							depth={depth + 1}
 							childFiles={file.childFiles}
 						/>
 						: <File
+							key={file.filename}
 							filename={file.filename}
 							depth={depth + 1}
 							fileExtension={file.fileExtension}

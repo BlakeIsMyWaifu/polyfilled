@@ -4,8 +4,14 @@ import styled from 'styled-components'
 
 import themeDarkPlus from '~/themes/darkplus'
 
-const AccordionContainer = styled.div`
+interface AccordionContainerProps {
+	isOpen: boolean;
+}
+
+const AccordionContainer = styled.div<AccordionContainerProps>`
 	color: ${themeDarkPlus.colours.sideBar.accordion.headerText};
+	height: ${props => props.isOpen ? '100%' : '20px'};
+	transition: height 0.2s ease-in;
 `
 
 interface AccordionTitleWrapperProps {
@@ -23,6 +29,14 @@ const AccordionTitleWrapper = styled.span<AccordionTitleWrapperProps>`
 
 const AccordionTitleText = styled.p``
 
+interface AccordionChildrenWrapperProps {
+	isOpen: boolean;
+}
+
+const AccordionChildrenWrapper = styled.div<AccordionChildrenWrapperProps>`
+	display: ${props => props.isOpen ? 'block' : 'none'};
+`
+
 interface AccordionProps<T extends string> {
 	title: T;
 	currentAccordion: T | null;
@@ -37,7 +51,8 @@ const Accordion = <T extends string>({ title, currentAccordion, setCurrentAccord
 	const isOpen = title === currentAccordion
 
 	return (
-		<AccordionContainer>
+		<AccordionContainer isOpen={isOpen}>
+
 			<AccordionTitleWrapper
 				isTop={isTop}
 				isBottom={isBottom}
@@ -46,7 +61,11 @@ const Accordion = <T extends string>({ title, currentAccordion, setCurrentAccord
 				{isOpen ? <VscChevronDown /> : <VscChevronRight />}
 				<AccordionTitleText>{title.toUpperCase()}</AccordionTitleText>
 			</AccordionTitleWrapper>
-			{isOpen && children}
+
+			<AccordionChildrenWrapper isOpen={isOpen}>
+				{children}
+			</AccordionChildrenWrapper>
+
 		</AccordionContainer>
 	)
 }

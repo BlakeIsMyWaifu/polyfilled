@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // @ts-check
 
-import NextBundleAnalyzer from '@next/bundle-analyzer'
-import { withContentlayer } from 'next-contentlayer'
+const { withContentlayer } = require('next-contentlayer')
 
-const withBundleAnalyzer = NextBundleAnalyzer({
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
 	enabled: process.env.ANALYZE === 'true'
 })
 
@@ -20,4 +20,4 @@ const nextConfig = {
 	}
 }
 
-export default withContentlayer(withBundleAnalyzer(nextConfig))
+module.exports = withBundleAnalyzer(withContentlayer(nextConfig))

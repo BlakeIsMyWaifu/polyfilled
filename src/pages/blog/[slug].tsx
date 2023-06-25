@@ -40,7 +40,7 @@ export const getStaticProps = ({ params: { slug } }: StaticProps) => {
 
 export const getStaticPaths = () => {
 	const posts = allPosts
-		.filter(post => post.draft)
+		.filter(post => !post.draft)
 		.map(post => ({
 			params: {
 				slug: post._raw.flattenedPath

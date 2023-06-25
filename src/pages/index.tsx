@@ -34,7 +34,7 @@ export const getStaticProps = () => {
 		'slug'
 	]))
 
-	const publishedPosts = posts.filter(post => post.draft)
+	const publishedPosts = posts.filter(post => !post.draft)
 
 	return {
 		props: {

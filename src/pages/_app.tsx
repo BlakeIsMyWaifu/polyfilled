@@ -7,6 +7,7 @@ import ActivityBar from '~/components/ActivityBar'
 import Sidebar from '~/components/Sidebar'
 import TabBar from '~/components/TabBar'
 import { GlobalStyle } from '~/styles/GlobalStyle'
+import { trpc } from '~/utils/trpc'
 
 const AppContainer = styled.div`
 	display: grid;
@@ -35,4 +36,4 @@ const App = ({ Component, pageProps }: AppProps) => {
 	)
 }
 
-export default App
+export default trpc.withTRPC(App)

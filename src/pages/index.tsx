@@ -10,7 +10,7 @@ const Home: NextPage<HomeProps> = ({ posts }: HomeProps) => {
 		<div>
 			{
 				posts.map(post => {
-					return <Link key={post.slug} href={`en/blog/${post.slug}`}>
+					return <Link key={post.slug} href={`blog/${post.slug}`}>
 						<h2>
 							{post.title}
 						</h2>

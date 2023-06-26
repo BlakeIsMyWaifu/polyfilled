@@ -13,23 +13,48 @@ export type SidebarSection =
 
 interface ApplicationState {
 	currentSidebar: SidebarSection;
+	currentTab: string;
+	tabs: string[];
 }
 
 const applicationState: ApplicationState = {
-	currentSidebar: 'explorer'
+	currentSidebar: 'explorer',
+	currentTab: '',
+	tabs: []
 }
 
 // Action
 
 interface ApplicationAction {
 	changeSidebar: (sidebar: SidebarSection) => void;
+	changeCurrentTab: (tab: string) => void;
+	addTab: (tab: string, changeCurrentTab: boolean) => void;
+	removeTab: (tab: string) => void;
 }
 
 const actionName = createActionName<keyof ApplicationAction>('application')
 
-const createApplicationAction: Slice<ApplicationStore, ApplicationAction> = set => ({
+const createApplicationAction: Slice<ApplicationStore, ApplicationAction> = (set, get) => ({
 	changeSidebar: sidebar => {
 		set({ currentSidebar: sidebar }, ...actionName('changeSidebar'))
+	},
+	changeCurrentTab: tab => {
+		set({ currentTab: tab }, ...actionName('changeCurrentTab'))
+	},
+	addTab: (newTab, changeCurrentTab) => {
+		const { tabs } = get()
+		if (!tabs.includes(newTab)) {
+			tabs.unshift(newTab)
+			set({ tabs }, ...actionName('addTab'))
+		}
+		if (changeCurrentTab) {
+			get().changeCurrentTab(newTab)
+		}
+	},
+	removeTab: tab => {
+		set(state => ({
+			tabs: state.tabs.filter(t => t !== tab)
+		}), ...actionName('removeTab'))
 	}
 })
 

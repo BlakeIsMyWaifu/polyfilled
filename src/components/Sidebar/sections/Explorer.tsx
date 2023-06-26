@@ -28,7 +28,7 @@ const Explorer = () => {
 		return allPosts.map(({ params: { slug } }) => ({
 			filename: slug,
 			fileExtension: 'md',
-			link: `/en/blog/${slug}`
+			link: `/blog/${slug}`
 		}) as const)
 	}, [allPosts])
 

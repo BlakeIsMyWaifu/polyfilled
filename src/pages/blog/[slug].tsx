@@ -43,6 +43,7 @@ export const getStaticPaths = () => {
 		.filter(post => !post.draft)
 		.map(post => ({
 			params: {
+				// TODO fix /en prefixing the path
 				slug: post._raw.flattenedPath
 			}
 		}))

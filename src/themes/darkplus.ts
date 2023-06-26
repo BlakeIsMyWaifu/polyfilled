@@ -24,6 +24,10 @@ interface Theme {
 			inactiveTabBackground: HexColour;
 			inactiveTabText: HexColour;
 		};
+		editor: {
+			background: HexColour;
+			lineNumberText: HexColour;
+		};
 	};
 }
 
@@ -50,6 +54,10 @@ const themeDarkPlus: Theme = {
 			activeTabText: '#ffffff',
 			inactiveTabBackground: '#2d2d2d',
 			inactiveTabText: '#ffffff80'
+		},
+		editor: {
+			background: '#1e1e1e',
+			lineNumberText: '#c6c6c6'
 		}
 	}
 }

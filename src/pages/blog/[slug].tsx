@@ -1,7 +1,9 @@
 import { allPosts } from 'contentlayer/generated'
 import { type GetStaticPathsContext, type InferGetStaticPropsType, type NextPage } from 'next'
-import Link from 'next/link'
 import { useMDXComponent } from 'next-contentlayer/hooks'
+
+import Editor from '~/components/Editor'
+import mdxComponents from '~/components/mdxComponents'
 
 type BlogSlugProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -10,11 +12,9 @@ const BlogSlug: NextPage<BlogSlugProps> = ({ post }: BlogSlugProps) => {
 	const MDXContent = useMDXComponent(post.body.code)
 
 	return (
-		<article>
-			<Link href={'/'}>home</Link>
-
-			<MDXContent />
-		</article>
+		<Editor>
+			<MDXContent components={mdxComponents} />
+		</Editor>
 	)
 }
 

@@ -3,11 +3,13 @@ import { allPosts } from 'contentlayer/generated'
 import { type InferGetStaticPropsType, type NextPage } from 'next'
 import Link from 'next/link'
 
+import Editor from '~/components/Editor'
+
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 const Home: NextPage<HomeProps> = ({ posts }: HomeProps) => {
 	return (
-		<div>
+		<Editor>
 			{
 				posts.map(post => {
 					return <Link key={post.slug} href={`blog/${post.slug}`}>
@@ -17,7 +19,7 @@ const Home: NextPage<HomeProps> = ({ posts }: HomeProps) => {
 					</Link>
 				})
 			}
-		</div>
+		</Editor>
 	)
 }
 

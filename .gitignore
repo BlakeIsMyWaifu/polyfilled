@@ -41,3 +41,4 @@ coverage-ts
 
 # Contentlayer
 .contentlayer
+.cache

@@ -21,6 +21,9 @@
       ],
       "contentlayer/generated": [
         "./.contentlayer/generated"
+      ],
+      "cache/*": [
+        "./.cache/*"
       ]
     }
   },
@@ -30,7 +33,8 @@
     "**/*.tsx",
     "next.config.js",
     ".contentlayer/generated",
-    "contentlayer.config.js"
+    "contentlayer.config.js",
+    "scripts/*.mjs"
   ],
   "exclude": ["node_modules"]
 }

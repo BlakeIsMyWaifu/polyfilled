@@ -25,7 +25,7 @@ const Explorer = () => {
 
 	const blogChildFiles = useMemo(() => {
 		if (!allPosts) return []
-		return allPosts.map(({ params: { slug } }) => ({
+		return allPosts.map(slug => ({
 			filename: slug,
 			fileExtension: 'md',
 			link: `/blog/${slug}`

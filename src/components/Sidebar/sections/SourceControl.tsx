@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
-import themeDarkPlus from '~/themes/darkplus'
+import { fileExtensionIcons } from '~/utils/fileExtensionIcons'
 import { trpc } from '~/utils/trpc'
 
 import Accordion from '../Accordion'
@@ -17,8 +17,20 @@ type SourceControlAccordionTitle =
 const SourceControl = () => {
 
 	const commits = trpc.github.commits.useQuery(undefined, {
-		staleTime: Infinity
+		staleTime: Infinity,
+		onSuccess: data => {
+			const fileURLs = data.map(commit => commit.commit.tree.url)
+			trees.mutate(fileURLs)
+		}
 	})
+
+	const trees = trpc.github.trees.useMutation({
+		cacheTime: Infinity
+	})
+
+	useEffect(() => {
+		console.log(trees)
+	}, [trees])
 
 	const [currentAccordion, setCurrentAccordion] = useState<SourceControlAccordionTitle | null>('commits')
 
@@ -31,21 +43,22 @@ const SourceControl = () => {
 				setCurrentAccordion={setCurrentAccordion}
 			>
 				{
-					commits.isSuccess && commits.data.map(commit => {
+					commits.isSuccess && commits.data.map((commit, i) => {
 
 						const commitAuthor: CommitAuthor = {
 							name: commit.author.login,
 							avatar: commit.author.avatar_url as Avatar
 						}
-
-						const commitFiles: File[] = []
+						// TODO: Tree type = tree => there are files further inside that also changed in the commit
+						//? The only way to access those files is with another query
+						const commitFiles = trees.data?.[i].tree.filter(tree => tree.type === 'blob').map(tree => tree.path)
 
 						return (
 							<CommitAccordion
 								key={commit.commit.url}
 								message={commit.commit.message}
 								author={commitAuthor}
-								files={[]}
+								files={commitFiles ?? []}
 							/>
 						)
 					})
@@ -100,10 +113,9 @@ interface CommitProps {
 	files: File[];
 }
 
-// TODO dunno why this don't work chief
 const MessageWrapper = styled.div`
-	text-overflow: 'ellipsis';
-	white-space: 'nowrap';
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	overflow: hidden;
 `
 
@@ -134,6 +146,38 @@ const Commit = ({ message, author, files }: CommitProps) => {
 			{
 				isOpen && files.map(file => {
 
+					const fileExtension = file.split('.').at(-1) ?? 'md'
+
+					let fileIcon = ''
+
+					switch(file) {
+						case 'README.md':
+							fileIcon = 'readme'
+							break
+						case 'package.json':
+							fileIcon = 'package'
+							break
+						case 'pnpm-lock.yaml':
+							fileIcon = 'pnpm'
+							break
+						case 'tsconfig.json':
+							fileIcon = 'tsconfig'
+							break
+						default:
+							fileIcon = fileExtension
+					}
+
+					return (
+						<LineWrapper depth={1} key={file}>
+							<Image
+								src={`/icons/${fileExtensionIcons[fileIcon]}.webp`}
+								alt={'File Extension'}
+								width={20}
+								height={20}
+							/>
+							<p>{file}</p>
+						</LineWrapper>
+					)
 				})
 			}
 		</>

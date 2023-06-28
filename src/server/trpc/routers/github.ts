@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 import { type Commits } from '~/types/githubCommit'
 import { type CommitTrees } from '~/types/githubCommitTree'
 
@@ -12,9 +14,10 @@ export const githubRouter = createTRPCRouter({
 			return json as Commits[]
 		}),
 	trees: publicProcedure
-		.query(async () => {
-			const response = await fetch('') // TODO figure out how to fetch a dynamic url
-			const json = await response.json()
+		.input(z.array(z.string()))
+		.mutation(async ({ input }) => {
+			const data = await Promise.all(input.map(async url => fetch(url)))
+			const json = await Promise.all(data.map(res => res.json()))
 			return json as CommitTrees[]
 		})
 })

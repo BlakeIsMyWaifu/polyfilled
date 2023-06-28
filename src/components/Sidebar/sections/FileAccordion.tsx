@@ -18,7 +18,7 @@ interface FileAccordionWrapperProps {
 	depth: number;
 }
 
-const LineWrapper = styled.div<FileAccordionWrapperProps>`
+export const LineWrapper = styled.div<FileAccordionWrapperProps>`
 	color: ${themeDarkPlus.colours.sideBar.accordion.headerText};
 	position: relative;
 	display: flex;

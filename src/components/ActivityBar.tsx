@@ -22,7 +22,6 @@ const ActivityBar = () => {
 				<Icon title='explorer' icon={<VscFiles size='28px' />} />
 				<Icon title='search' icon={<VscSearch size='28px' />} />
 				<Icon title='sourceControl' icon={<VscSourceControl size='28px' />} />
-				<Icon title='github' icon={<VscGithub size='28px' />} />
 			</IconGroup>
 			<IconGroup>
 				<Icon icon={<VscSettingsGear size='28px' />} />

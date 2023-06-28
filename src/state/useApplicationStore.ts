@@ -9,7 +9,6 @@ export type SidebarSection =
 	| 'explorer'
 	| 'search'
 	| 'sourceControl'
-	| 'github'
 
 interface ApplicationState {
 	currentSidebar: SidebarSection;

@@ -5,7 +5,6 @@ import { type SidebarSection, useApplicationStore } from '~/state/useApplication
 import themeDarkPlus from '~/themes/darkplus'
 
 import Explorer from './sections/Explorer'
-import Github from './sections/Github'
 import Search from './sections/Search'
 import SourceControl from './sections/SourceControl'
 
@@ -26,8 +25,7 @@ const SidebarHeader = styled.p`
 const sections: Record<SidebarSection, ReactElement> = {
 	explorer: <Explorer />,
 	search: <Search />,
-	sourceControl: <SourceControl />,
-	github: <Github />
+	sourceControl: <SourceControl />
 }
 
 const Sidebar = () => {

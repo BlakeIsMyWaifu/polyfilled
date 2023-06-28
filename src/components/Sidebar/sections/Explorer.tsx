@@ -1,7 +1,6 @@
+import { trpc } from '~/utils/trpc'
 import { useMemo, useState } from 'react'
 import styled from 'styled-components'
-
-import { trpc } from '~/utils/trpc'
 
 import Accordion from '../Accordion'
 import FileAccordionInner from './FileAccordion'

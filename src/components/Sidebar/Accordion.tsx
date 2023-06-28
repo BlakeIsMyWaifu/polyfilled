@@ -1,4 +1,4 @@
-import { type Dispatch, type ReactElement, type SetStateAction } from 'react'
+import { type Dispatch, type ReactElement, type ReactNode, type SetStateAction } from 'react'
 import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
@@ -43,7 +43,7 @@ interface AccordionProps<T extends string> {
 	setCurrentAccordion: Dispatch<SetStateAction<AccordionProps<T>['currentAccordion']>>;
 	isTop?: boolean;
 	isBottom?: boolean;
-	children?: ReactElement | string;
+	children?: ReactNode;
 }
 
 const Accordion = <T extends string>({ title, currentAccordion, setCurrentAccordion, isTop, isBottom, children }: AccordionProps<T>) => {

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -31,10 +31,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "next.config.js",
+    "**/*.mjs",
+    "next.config.mjs",
     ".contentlayer/generated",
-    "contentlayer.config.js",
-    "scripts/*.mjs"
+    "contentlayer.config.js"
   ],
   "exclude": ["node_modules"]
 }

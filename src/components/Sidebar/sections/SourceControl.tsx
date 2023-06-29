@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 import { fileExtensionIcons } from '~/utils/fileExtensionIcons'
-import { trpc } from '~/utils/trpc'
+import { type RouterOutputs, trpc } from '~/utils/trpc'
 
 import Accordion from '../Accordion'
 import { LineWrapper } from './FileAccordion'
@@ -14,23 +14,21 @@ type SourceControlAccordionTitle =
 	| 'pull requests'
 	| 'issues'
 
+const CommitAccordionContainer = styled.div``
+
+const MessageWrapper = styled.div`
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+`
+
+type Commit = RouterOutputs['github']['commits'][number]
+
 const SourceControl = () => {
 
 	const commits = trpc.github.commits.useQuery(undefined, {
-		staleTime: Infinity,
-		onSuccess: data => {
-			const fileURLs = data.map(commit => commit.commit.tree.url)
-			trees.mutate(fileURLs)
-		}
+		staleTime: Infinity
 	})
-
-	const trees = trpc.github.trees.useMutation({
-		cacheTime: Infinity
-	})
-
-	useEffect(() => {
-		console.log(trees)
-	}, [trees])
 
 	const [currentAccordion, setCurrentAccordion] = useState<SourceControlAccordionTitle | null>('commits')
 
@@ -42,27 +40,18 @@ const SourceControl = () => {
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
 			>
-				{
-					commits.isSuccess && commits.data.map((commit, i) => {
-
-						const commitAuthor: CommitAuthor = {
-							name: commit.author.login,
-							avatar: commit.author.avatar_url as Avatar
-						}
-						// TODO: Tree type = tree => there are files further inside that also changed in the commit
-						//? The only way to access those files is with another query
-						const commitFiles = trees.data?.[i].tree.filter(tree => tree.type === 'blob').map(tree => tree.path)
-
-						return (
-							<CommitAccordion
-								key={commit.commit.url}
-								message={commit.commit.message}
-								author={commitAuthor}
-								files={commitFiles ?? []}
-							/>
-						)
-					})
-				}
+				<CommitAccordionContainer>
+					{
+						commits.isSuccess && commits.data.map(commit => {
+							return (
+								<Commit
+									key={commit.commit.url}
+									commit={commit}
+								/>
+							)
+						})
+					}
+				</CommitAccordionContainer>
 			</Accordion>
 			<Accordion
 				title={'pull requests'}
@@ -79,47 +68,11 @@ const SourceControl = () => {
 	)
 }
 
-const CommitAccordionContainer = styled.div`
-	
-`
-
-type Avatar = `https://avatars.githubusercontent.com/u/${string}`
-
-type CommitAuthor = {
-	name: string;
-	avatar: Avatar;
-}
-
-type File = string;
-
-interface CommitAccordionProps {
-	message: string;
-	author: CommitAuthor;
-	files: File[];
-}
-
-const CommitAccordion = ({ message, author, files }: CommitAccordionProps) => {
-	return (
-		<CommitAccordionContainer>
-			<Commit message={message} author={author}
-				files={files} />
-		</CommitAccordionContainer>
-	)
-}
-
 interface CommitProps {
-	message: string;
-	author: CommitAuthor;
-	files: File[];
+	commit: Commit;
 }
 
-const MessageWrapper = styled.div`
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-`
-
-const Commit = ({ message, author, files }: CommitProps) => {
+const Commit = ({ commit }: CommitProps) => {
 
 	const [isOpen, setIsOpen] = useState(false)
 
@@ -127,8 +80,8 @@ const Commit = ({ message, author, files }: CommitProps) => {
 		<>
 			<LineWrapper depth={0} onClick={() => setIsOpen(state => !state)}>
 				<Image
-					src={author.avatar}
-					alt={`${author.name}'s avatar`}
+					src={commit.committer?.avatar_url ?? ''}
+					alt={`${commit.author?.login ?? ''}'s avatar`}
 					width={20}
 					height={20}
 				/>
@@ -141,47 +94,60 @@ const Commit = ({ message, author, files }: CommitProps) => {
 							<VscChevronRight />
 						</div>
 				}
-				<MessageWrapper>{message}</MessageWrapper>
+				<MessageWrapper>{commit.commit.message}</MessageWrapper>
 			</LineWrapper>
 			{
-				isOpen && files.map(file => {
-
-					const fileExtension = file.split('.').at(-1) ?? 'md'
-
-					let fileIcon = ''
-
-					switch(file) {
-						case 'README.md':
-							fileIcon = 'readme'
-							break
-						case 'package.json':
-							fileIcon = 'package'
-							break
-						case 'pnpm-lock.yaml':
-							fileIcon = 'pnpm'
-							break
-						case 'tsconfig.json':
-							fileIcon = 'tsconfig'
-							break
-						default:
-							fileIcon = fileExtension
-					}
-
-					return (
-						<LineWrapper depth={1} key={file}>
-							<Image
-								src={`/icons/${fileExtensionIcons[fileIcon]}.webp`}
-								alt={'File Extension'}
-								width={20}
-								height={20}
-							/>
-							<p>{file}</p>
-						</LineWrapper>
-					)
-				})
+				isOpen && <CommitTree sha={commit.sha} />
 			}
 		</>
 	)
+}
+
+interface CommitTreeProps {
+	sha: string;
+}
+
+const CommitTree = ({ sha }: CommitTreeProps) => {
+
+	const { data } = trpc.github.commitFiles.useQuery(sha, {
+		staleTime: Infinity
+	})
+
+	return data?.files?.map(({ filename }) => {
+
+		const fileExtension = filename.split('.').at(-1) ?? 'md'
+
+		let fileIcon = ''
+
+		switch(filename) {
+			case 'README.md':
+				fileIcon = 'readme'
+				break
+			case 'package.json':
+				fileIcon = 'package'
+				break
+			case 'pnpm-lock.yaml':
+				fileIcon = 'pnpm'
+				break
+			case 'tsconfig.json':
+				fileIcon = 'tsconfig'
+				break
+			default:
+				fileIcon = fileExtension
+		}
+
+		return (
+			<LineWrapper depth={1} key={filename}>
+				<Image
+					src={`/icons/${fileExtensionIcons[fileIcon] ?? 'json'}.webp`}
+					alt={'File Extension'}
+					width={20}
+					height={20}
+				/>
+				<p>{filename}</p>
+			</LineWrapper>
+		)
+	})
 }
 
 export default SourceControl

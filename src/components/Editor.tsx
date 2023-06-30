@@ -2,6 +2,7 @@ import { type ReactElement, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { useApplicationStore } from '~/state/useApplicationStore'
+import { useExplorerStore } from '~/state/useExplorerStore'
 import themeDarkPlus from '~/themes/darkplus'
 
 const EditorContainer = styled.div`
@@ -59,6 +60,15 @@ const Editor = ({ children }: EditorProps) => {
 		if (!articleRef.current) return
 		setArticleHeight(articleRef.current.scrollHeight + 48)
 	}, [articleRef, currentTab])
+
+	const setOutline = useExplorerStore(state => state.setOutline)
+
+	useEffect(() => {
+		if (!articleRef.current) return
+		const headers = [...articleRef.current.childNodes].filter(node => node.nodeName.match(/^H[0-9]$/)) as HTMLHeadElement[]
+		const outline = headers.map<[string, string]>(header => [header.innerText, header.id])
+		setOutline(outline)
+	}, [currentTab, articleRef, setOutline])
 
 	return (
 		<EditorContainer>

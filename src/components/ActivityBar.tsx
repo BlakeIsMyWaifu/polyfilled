@@ -1,5 +1,5 @@
 import { type ReactElement } from 'react'
-import { VscFiles, VscGithub, VscSearch, VscSettingsGear, VscSourceControl } from 'react-icons/vsc'
+import { VscFiles, VscSearch, VscSettingsGear, VscSourceControl } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 import { type SidebarSection, useApplicationStore } from '~/state/useApplicationStore'

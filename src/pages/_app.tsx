@@ -1,4 +1,5 @@
 import '~/styles/fonts.css'
+import '~/styles/rehype.css'
 
 import { type AppProps } from 'next/app'
 import styled from 'styled-components'

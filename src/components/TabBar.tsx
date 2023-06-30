@@ -53,7 +53,8 @@ const TabBar = () => {
 	const removeTab = useApplicationStore(state => state.removeTab)
 
 	useEffect(() => {
-		addTab(router.asPath, true)
+		const path = router.asPath.split('#')[0]
+		addTab(path, true)
 	}, [addTab, router.asPath])
 
 	return (

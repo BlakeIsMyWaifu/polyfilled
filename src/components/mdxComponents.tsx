@@ -7,11 +7,15 @@ const listPadding: CSSProperties = {
 }
 
 const mdxComponents: MDXComponents = {
-	a: ({ href, children }) => <Link
-		href={href ?? ''}
-		target='_blank'
-		rel='noopener noreferrer'
-	>{children}</Link>,
+	a: ({ href, children }) => {
+		return (href ?? '')[0] === '#'
+			? <Link href={href ?? ''}>{children}</Link>
+			: <Link
+				href={href ?? ''}
+				target='_blank'
+				rel='noopener noreferrer'
+			>{children}</Link>
+	},
 
 	ul: ({ children }) => <ul style={listPadding}>{children}</ul>,
 

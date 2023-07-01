@@ -1,9 +1,10 @@
-import { trpc } from '~/utils/trpc'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
-import Accordion from '../Accordion'
-import FileAccordionInner from './FileAccordion'
+import Accordion from '~/components/Sidebar/Accordion'
+
+import Files from './Files'
+import Outline from './Outline'
 
 const Accordions = styled.div`
 	height: 100%;
@@ -18,19 +19,6 @@ type ExplorerAccordionTitle =
 
 const Explorer = () => {
 
-	const { data: allPosts } = trpc.posts.getAllPostSlugs.useQuery(undefined, {
-		staleTime: Infinity
-	})
-
-	const blogChildFiles = useMemo(() => {
-		if (!allPosts) return []
-		return allPosts.map(slug => ({
-			filename: slug,
-			fileExtension: 'md',
-			link: `/blog/${slug}`
-		}) as const)
-	}, [allPosts])
-
 	const [currentAccordion, setCurrentAccordion] = useState<ExplorerAccordionTitle | null>('polyfilled')
 
 	return (
@@ -41,26 +29,15 @@ const Explorer = () => {
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
 			>
-				<FileAccordionInner
-					filename='pages'
-					childFiles={[
-						{
-							filename: 'blog',
-							childFiles: blogChildFiles
-						},
-						{
-							filename: 'index',
-							fileExtension: 'tsx',
-							link: '/'
-						}
-					]}
-				/>
+				<Files />
 			</Accordion>
 			<Accordion
 				title={'outline'}
 				currentAccordion={currentAccordion}
 				setCurrentAccordion={setCurrentAccordion}
-			/>
+			>
+				<Outline />
+			</Accordion>
 			<Accordion
 				isBottom
 				title={'open editors'}

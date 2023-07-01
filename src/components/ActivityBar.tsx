@@ -13,19 +13,17 @@ const ActivityBarContainer = styled.div`
 	justify-content: space-between;
 `
 
-const IconGroup = styled.div``
-
 const ActivityBar = () => {
 	return (
 		<ActivityBarContainer>
-			<IconGroup>
+			<div>
 				<Icon title='explorer' icon={<VscFiles size='28px' />} />
 				<Icon title='search' icon={<VscSearch size='28px' />} />
 				<Icon title='sourceControl' icon={<VscSourceControl size='28px' />} />
-			</IconGroup>
-			<IconGroup>
+			</div>
+			<div>
 				<Icon icon={<VscSettingsGear size='28px' />} />
-			</IconGroup>
+			</div>
 		</ActivityBarContainer>
 	)
 }

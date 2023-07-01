@@ -1,8 +1,14 @@
-import { type Dispatch, type ReactNode, type SetStateAction } from 'react'
+import { type Dispatch, type ReactNode, type SetStateAction, useState } from 'react'
 import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 import themeDarkPlus from '~/themes/darkplus'
+
+const AccordionsContainer = styled.div`
+	height: calc(100% - 40px);
+	display: flex;
+	flex-direction: column;
+`
 
 interface AccordionContainerProps {
 	isOpen: boolean;
@@ -10,7 +16,7 @@ interface AccordionContainerProps {
 
 const AccordionContainer = styled.div<AccordionContainerProps>`
 	color: ${themeDarkPlus.colours.sideBar.accordion.headerText};
-	height: ${props => props.isOpen ? '100%' : '20px'};
+	height: ${props => props.isOpen ? 'calc(100% - 40px)' : '20px'};
 	transition: height 0.2s ease-in;
 `
 
@@ -27,15 +33,48 @@ const AccordionTitleWrapper = styled.span<AccordionTitleWrapperProps>`
 	border-bottom: solid ${props => props.isBottom ? 0 : 1}px ${themeDarkPlus.colours.sideBar.accordion.border};
 `
 
-const AccordionTitleText = styled.p``
-
 interface AccordionChildrenWrapperProps {
 	isOpen: boolean;
 }
 
 const AccordionChildrenWrapper = styled.div<AccordionChildrenWrapperProps>`
 	display: ${props => props.isOpen ? 'block' : 'none'};
+	height: 100%;
+	max-height: calc(100% - 20px);
+	overflow-y: auto;
+	overflow-x: hidden;
 `
+
+interface AccordionsProps {
+	accordions: {
+		name: string;
+		children: ReactNode;
+	}[];
+}
+
+const Accordions = ({ accordions }: AccordionsProps) => {
+
+	const [currentAccordion, setCurrentAccordion] = useState<string | null>(accordions[0].name)
+
+	return (
+		<AccordionsContainer>
+			{
+				accordions.map(({ name, children }, i) => {
+					return <Accordion
+						key={name}
+						title={name}
+						currentAccordion={currentAccordion}
+						setCurrentAccordion={setCurrentAccordion}
+						isTop={!!i}
+						isBottom={i === (accordions.length - 1)}
+					>
+						{children}
+					</Accordion>
+				})
+			}
+		</AccordionsContainer>
+	)
+}
 
 interface AccordionProps<T extends string> {
 	title: T;
@@ -59,7 +98,7 @@ const Accordion = <T extends string>({ title, currentAccordion, setCurrentAccord
 				onClick={() => setCurrentAccordion(isOpen ? null : title)}
 			>
 				{isOpen ? <VscChevronDown /> : <VscChevronRight />}
-				<AccordionTitleText>{title.toUpperCase()}</AccordionTitleText>
+				<p>{title.toUpperCase()}</p>
 			</AccordionTitleWrapper>
 
 			<AccordionChildrenWrapper isOpen={isOpen}>
@@ -70,4 +109,4 @@ const Accordion = <T extends string>({ title, currentAccordion, setCurrentAccord
 	)
 }
 
-export default Accordion
+export default Accordions

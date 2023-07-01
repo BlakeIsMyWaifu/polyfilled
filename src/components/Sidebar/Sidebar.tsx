@@ -11,6 +11,7 @@ import SourceControl from './sections/SourceControl'
 const SidebarContainer = styled.div`
 	grid-area: sidebar;
 	width: 256px;
+	max-height: 100vh;
 	background-color: ${themeDarkPlus.colours.sideBar.background};
 	display: flex;
 	flex-direction: column;

@@ -65,8 +65,8 @@ const Editor = ({ children }: EditorProps) => {
 
 	useEffect(() => {
 		if (!articleRef.current) return
-		const headers = [...articleRef.current.childNodes].filter(node => node.nodeName.match(/^H[0-9]$/)) as HTMLHeadElement[]
-		const outline = headers.map<[string, string]>(header => [header.innerText, header.id])
+		const headers = [...articleRef.current.childNodes].filter(node => node.nodeName.match(/^H[0-9]$/)) as HTMLHeadingElement[]
+		const outline = headers.map<[string, string, number]>(header => [header.innerText, header.id, +header.nodeName[1]])
 		setOutline(outline)
 	}, [currentTab, articleRef, setOutline])
 

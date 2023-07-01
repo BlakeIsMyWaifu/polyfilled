@@ -23,10 +23,10 @@ const Outline = () => {
 
 	return <OutlineContainer>
 		{
-			outline.map(([title, id]) => {
+			outline.map(([title, id, number]) => {
 				return <Anchor key={id} href={`#${id}`}>
 					<HeaderWrapper>
-						# {title}
+						{'#'.repeat(number)} {title}
 					</HeaderWrapper>
 				</Anchor>
 			})

@@ -6,7 +6,7 @@ import { devtools } from 'zustand/middleware'
 import { createActionName,type Slice } from '~/types/storeTypes'
 
 interface ExplorerState {
-	outline: [title: string, id: string][];
+	outline: [title: string, id: string, number: number][];
 }
 
 const explorerState: ExplorerState = {

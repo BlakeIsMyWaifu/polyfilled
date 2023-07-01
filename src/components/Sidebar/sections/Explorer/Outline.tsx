@@ -1,37 +1,29 @@
-import Link from 'next/link'
-import styled from 'styled-components'
+import { useMemo } from 'react'
+import { BsHash } from 'react-icons/bs'
 
 import { useExplorerStore } from '~/state/useExplorerStore'
 
-const OutlineContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-	padding: 4px;
-`
-
-const Anchor = styled(Link)`
-	text-decoration: none;
-	color: white;
-`
-
-const HeaderWrapper = styled.p``
+import Tree, { type TreeStructure } from '../Tree'
 
 const Outline = () => {
 
 	const outline = useExplorerStore(state => state.outline)
 
-	return <OutlineContainer>
-		{
-			outline.map(([title, id, number]) => {
-				return <Anchor key={id} href={`#${id}`}>
-					<HeaderWrapper>
-						{'#'.repeat(number)} {title}
-					</HeaderWrapper>
-				</Anchor>
+	const treeStructure = useMemo(() => {
+		const structure: TreeStructure = []
+
+		outline.forEach(([title, id, _number]) => {
+			structure.push({
+				name: title,
+				icon: <BsHash />,
+				link: `#${id}`
 			})
-		}
-	</OutlineContainer>
+		})
+
+		return structure
+	}, [outline])
+
+	return <Tree structure={treeStructure}/>
 }
 
 export default Outline

@@ -25,7 +25,7 @@ const LineWrapper = styled.div<LineWrapperProps>`
 	flex-direction: row;
 	align-items: center;
 	gap: 4px;
-	padding-left: ${props => props.depth * 8}px;
+	padding-left: ${props => props.depth * 16}px;
 	&:hover {
 		background-color: ${themeDarkPlus.colours.activityBar.background};
 	}
@@ -133,7 +133,7 @@ const File = ({ name, icon, link, depth }: FileProps) => {
 	</>
 
 	return (
-		<LineWrapper depth={depth + 2}>
+		<LineWrapper depth={depth}>
 			{
 				link
 					? <Link href={link} style={{

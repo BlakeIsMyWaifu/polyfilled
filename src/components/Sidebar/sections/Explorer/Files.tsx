@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { FcFile, FcFolder, FcOpenedFolder } from 'react-icons/fc'
 
-import FileAccordionInner from '~/components/Sidebar/sections/FileAccordion'
 import { trpc } from '~/utils/trpc'
+
+import Tree from '../Tree'
 
 const Files = () => {
 
@@ -9,29 +10,32 @@ const Files = () => {
 		staleTime: Infinity
 	})
 
-	const blogChildFiles = useMemo(() => {
-		if (!allPosts) return []
-		return allPosts.map(slug => ({
-			filename: slug,
-			fileExtension: 'md',
-			link: `/blog/${slug}`
-		}) as const)
-	}, [allPosts])
-
-	return <FileAccordionInner
-		filename='pages'
-		childFiles={[
-			{
-				filename: 'blog',
-				childFiles: blogChildFiles
-			},
-			{
-				filename: 'index',
-				fileExtension: 'tsx',
-				link: '/'
-			}
-		]}
-	/>
+	return <Tree structure={[
+		{
+			name: 'pages',
+			icon: <FcOpenedFolder />,
+			closedIcon: <FcFolder />,
+			open: true,
+			children: [
+				{
+					name: 'blog',
+					icon: <FcOpenedFolder />,
+					closedIcon: <FcFolder />,
+					open: false,
+					children: (allPosts ?? []).map(slug => ({
+						name: slug,
+						icon: <FcFile />,
+						link: `/blog/${slug}`
+					}))
+				},
+				{
+					name: 'index.tsx',
+					icon: <FcFile />,
+					link: '/'
+				}
+			]
+		}
+	]}/>
 }
 
 export default Files

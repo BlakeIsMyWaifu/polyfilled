@@ -30,8 +30,6 @@ const TabContainer = styled.div<TabContainerProps>`
 	cursor: pointer;
 `
 
-const TabText = styled.p``
-
 const TabCloseWrapper = styled.span`
 	height: 20px;
 	aspect-ratio: 1 / 1;
@@ -73,7 +71,7 @@ const TabBar = () => {
 						}}
 					>
 						<FcFile />
-						<TabText>{tabName}.{fileExtension}</TabText>
+						<p>{tabName}.{fileExtension}</p>
 						{
 							isActive && <TabCloseWrapper onClick={() =>  {
 								if (tab === '/' && !(tabs.length - 1)) return

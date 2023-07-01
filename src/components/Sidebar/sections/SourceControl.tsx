@@ -7,7 +7,7 @@ import { fileExtensionIcons } from '~/utils/fileExtensionIcons'
 import { type RouterOutputs, trpc } from '~/utils/trpc'
 
 import Accordion from '../Accordion'
-import { LineWrapper } from './FileAccordion'
+import { LineWrapper } from '../FileAccordion'
 
 type SourceControlAccordionTitle =
 	| 'commits'

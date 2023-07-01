@@ -39,7 +39,7 @@ interface BranchBase {
 interface FolderBranch extends BranchBase {
 	open: boolean;
 	closedIcon?: ReactElement;
-	children: TreeStructure;
+	children: TreeStructure | ReactElement;
 }
 
 interface FileBranch extends BranchBase {
@@ -88,6 +88,10 @@ const Folder = ({ name, icon, open, children, depth, closedIcon }: FolderProps) 
 
 	const [isOpen, toggle] = useToggle(open)
 
+	const isTreeStructure = (children: FolderBranch['children']): children is TreeStructure => {
+		return Array.isArray(children)
+	}
+
 	return (
 		<>
 			<LineWrapper depth={depth} onClick={toggle}>
@@ -105,19 +109,23 @@ const Folder = ({ name, icon, open, children, depth, closedIcon }: FolderProps) 
 				{name}
 			</LineWrapper>
 			{
-				isOpen && children.map(branch => {
-					return isFolder(branch)
-						? <Folder
-							key={branch.name}
-							depth={depth + 1}
-							{...branch}
-						/>
-						: <File
-							key={branch.name}
-							depth={depth + 1}
-							{...branch}
-						/>
-				})
+				isOpen && (
+					isTreeStructure(children)
+						? children.map(branch => {
+							return isFolder(branch)
+								? <Folder
+									key={branch.name}
+									depth={depth + 1}
+									{...branch}
+								/>
+								: <File
+									key={branch.name}
+									depth={depth + 1}
+									{...branch}
+								/>
+						})
+						: children
+				)
 			}
 		</>
 	)
@@ -125,7 +133,7 @@ const Folder = ({ name, icon, open, children, depth, closedIcon }: FolderProps) 
 
 type FileProps = FileBranch & BranchProps
 
-const File = ({ name, icon, link, depth }: FileProps) => {
+export const File = ({ name, icon, link, depth }: FileProps) => {
 
 	const inner = <>
 		{icon}

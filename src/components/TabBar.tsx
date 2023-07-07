@@ -1,11 +1,10 @@
+import { useApplicationStore } from '~/state/useApplicationStore'
+import themeDarkPlus from '~/themes/darkplus'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { FcFile } from 'react-icons/fc'
 import { VscChromeClose } from 'react-icons/vsc'
 import styled from 'styled-components'
-
-import { useApplicationStore } from '~/state/useApplicationStore'
-import themeDarkPlus from '~/themes/darkplus'
 
 const TabBarContainer = styled.div`
 	grid-area: tabs;
@@ -73,7 +72,6 @@ const TabBar = () => {
 						key={tab}
 						isActive={isActive}
 						onMouseDown={event => {
-							console.log(event)
 							if (event.button === 1) {
 								handleCloseTab(tab)
 							} else {

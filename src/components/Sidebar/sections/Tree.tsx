@@ -64,18 +64,14 @@ const Tree = ({ structure }: TreeProps) => {
 	return (
 		<TreeContainer>
 			{
-				structure.map(branch => {
+				structure.map((branch, i) => {
+					const props = {
+						key: `${i}-${branch.name}`,
+						depth: 0
+					} as const
 					return isFolder(branch)
-						? <Folder
-							key={branch.name}
-							depth={0}
-							{...branch}
-						/>
-						: <File
-							key={branch.name}
-							depth={0}
-							{...branch}
-						/>
+						? <Folder {...props} {...branch} />
+						: <File {...props} {...branch} />
 				})
 			}
 		</TreeContainer>
@@ -111,18 +107,14 @@ const Folder = ({ name, icon, open, children, depth, closedIcon }: FolderProps) 
 			{
 				isOpen && (
 					isTreeStructure(children)
-						? children.map(branch => {
+						? children.map((branch, i) => {
+							const props = {
+								key: `${i}-${branch.name}`,
+								depth: depth + 1
+							} as const
 							return isFolder(branch)
-								? <Folder
-									key={branch.name}
-									depth={depth + 1}
-									{...branch}
-								/>
-								: <File
-									key={branch.name}
-									depth={depth + 1}
-									{...branch}
-								/>
+								? <Folder {...props} {...branch} />
+								: <File {...props} {...branch} />
 						})
 						: children
 				)

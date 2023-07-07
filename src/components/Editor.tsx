@@ -1,6 +1,7 @@
 import { type ReactNode,useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
+import useWindowSize from '~/hooks/useWindowSize'
 import { useApplicationStore } from '~/state/useApplicationStore'
 import { useExplorerStore } from '~/state/useExplorerStore'
 import themeDarkPlus from '~/themes/darkplus'
@@ -56,10 +57,12 @@ const Editor = ({ children }: EditorProps) => {
 
 	const currentTab = useApplicationStore(state => state.currentTab)
 
+	const { height } = useWindowSize()
+
 	useEffect(() => {
 		if (!articleRef.current) return
 		setArticleHeight(articleRef.current.scrollHeight)
-	}, [articleRef, currentTab])
+	}, [articleRef, currentTab, height])
 
 	const setOutline = useExplorerStore(state => state.setOutline)
 
@@ -74,7 +77,7 @@ const Editor = ({ children }: EditorProps) => {
 		<EditorContainer>
 			<LineNumberContainer articleHeight={articleHeight}>
 				{
-					Array.from({ length: ~~(articleHeight / 20) + 1 }).map((_, i) => {
+					Array.from({ length: ~~(articleHeight / 20) + (articleHeight > height ? 8 : 0) }).map((_, i) => {
 						return <LineNumber key={i} />
 					})
 				}

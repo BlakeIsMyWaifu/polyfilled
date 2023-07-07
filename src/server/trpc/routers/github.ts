@@ -11,7 +11,7 @@ const gitDetails = {
 export const githubRouter = createTRPCRouter({
 	commits: publicProcedure
 		.query(async ({ ctx }) => {
-			const { data }= await ctx.octokit.rest.repos.listCommits(gitDetails)
+			const { data } = await ctx.octokit.rest.repos.listCommits(gitDetails)
 			return data
 		}),
 	commitFiles: publicProcedure

@@ -55,6 +55,13 @@ const TabBar = () => {
 		addTab(path, true)
 	}, [addTab, router.asPath])
 
+	const handleCloseTab = (tab: string) => {
+		if (tab === '/' && !(tabs.length - 1)) return
+		removeTab(tab)
+		const newRoute = (tabs.find(t => t !== tab) ?? '/')
+		void router.push(newRoute)
+	}
+
 	return (
 		<TabBarContainer>
 			{
@@ -65,20 +72,20 @@ const TabBar = () => {
 					return <TabContainer
 						key={tab}
 						isActive={isActive}
-						onClick={() => {
-							if (isActive) return
-							void router.push(`${tab}`)
+						onMouseDown={event => {
+							console.log(event)
+							if (event.button === 1) {
+								handleCloseTab(tab)
+							} else {
+								if (isActive) return
+								void router.push(`${tab}`)
+							}
 						}}
 					>
 						<FcFile />
 						<p>{tabName}.{fileExtension}</p>
 						{
-							isActive && <TabCloseWrapper onClick={() =>  {
-								if (tab === '/' && !(tabs.length - 1)) return
-								removeTab(tab)
-								const newRoute = (tabs.find(t => t !== tab) ?? '/')
-								void router.push(newRoute)
-							}}>
+							isActive && <TabCloseWrapper onClick={() => handleCloseTab(tab)}>
 								<VscChromeClose />
 							</TabCloseWrapper>
 						}

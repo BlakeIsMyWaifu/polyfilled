@@ -1,24 +1,16 @@
 import { pick } from 'contentlayer/client'
 import { allPosts } from 'contentlayer/generated'
 import { type InferGetStaticPropsType, type NextPage } from 'next'
-import Link from 'next/link'
 
 import Editor from '~/components/Editor'
+import { Header } from '~/components/EditorComponents'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
-const Home: NextPage<HomeProps> = ({ posts }: HomeProps) => {
+const Home: NextPage<HomeProps> = ({ posts: _posts }: HomeProps) => {
 	return (
 		<Editor>
-			{
-				posts.map(post => {
-					return <Link key={post.slug} href={`blog/${post.slug}`}>
-						<h2>
-							{post.title}
-						</h2>
-					</Link>
-				})
-			}
+			<Header type='h1'>Polyfilled</Header>
 		</Editor>
 	)
 }
@@ -32,15 +24,15 @@ export const getStaticProps = () => {
 		'preview',
 		'draft',
 		'tags',
-		'categories',
 		'slug'
 	]))
 
 	const publishedPosts = posts.filter(post => !post.draft)
+	const recentPosts = publishedPosts.slice(0, 4)
 
 	return {
 		props: {
-			posts: publishedPosts
+			posts: recentPosts
 		}
 	}
 }

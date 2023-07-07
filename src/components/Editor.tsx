@@ -1,4 +1,4 @@
-import { type ReactElement, useEffect, useRef, useState } from 'react'
+import { type ReactNode,useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { useApplicationStore } from '~/state/useApplicationStore'
@@ -15,12 +15,11 @@ const EditorContainer = styled.div`
 
 const Article = styled.article`
 	width: 100%;
-	padding: 32px;
+	padding: 20px;
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: 20px;
 	color: white;
-	padding-bottom: 48px;
 `
 
 interface LineNumberContainer {
@@ -37,6 +36,7 @@ const LineNumberContainer = styled.pre<LineNumberContainer>`
 `
 
 const LineNumber = styled.span`
+	min-height: 20px;
 	color: ${themeDarkPlus.colours.editor.lineNumberText};
 	text-align: right;
 	counter-increment: line;
@@ -46,7 +46,7 @@ const LineNumber = styled.span`
 `
 
 interface EditorProps {
-	children?: ReactElement | ReactElement[];
+	children?: ReactNode;
 }
 
 const Editor = ({ children }: EditorProps) => {
@@ -58,7 +58,7 @@ const Editor = ({ children }: EditorProps) => {
 
 	useEffect(() => {
 		if (!articleRef.current) return
-		setArticleHeight(articleRef.current.scrollHeight + 48)
+		setArticleHeight(articleRef.current.scrollHeight)
 	}, [articleRef, currentTab])
 
 	const setOutline = useExplorerStore(state => state.setOutline)
@@ -74,7 +74,7 @@ const Editor = ({ children }: EditorProps) => {
 		<EditorContainer>
 			<LineNumberContainer articleHeight={articleHeight}>
 				{
-					Array.from({ length: ~~(articleHeight / 19) + 1 }).map((_, i) => {
+					Array.from({ length: ~~(articleHeight / 20) + 1 }).map((_, i) => {
 						return <LineNumber key={i} />
 					})
 				}

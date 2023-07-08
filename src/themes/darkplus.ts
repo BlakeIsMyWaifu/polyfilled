@@ -28,6 +28,11 @@ interface Theme {
 			background: HexColour;
 			lineNumberText: HexColour;
 		};
+		footer: {
+			background: HexColour;
+			hoverBackground: HexColour;
+			text: HexColour;
+		};
 	};
 }
 
@@ -58,6 +63,11 @@ const themeDarkPlus: Theme = {
 		editor: {
 			background: '#1e1e1e',
 			lineNumberText: '#c6c6c6'
+		},
+		footer: {
+			background: '#414339',
+			hoverBackground: '#585a51',
+			text: '#ffffff'
 		}
 	}
 }

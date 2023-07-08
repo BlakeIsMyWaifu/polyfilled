@@ -29,12 +29,12 @@ const mdxComponents: MDXComponents = {
 
 	ol: ({ children }) => <ol style={listPadding}>{children}</ol>,
 
-	h1: ({ children }) =>  <Header type='h1'>{children}</Header>,
-	h2: ({ children }) =>  <Header type='h2'>{children}</Header>,
-	h3: ({ children }) =>  <Header type='h3'>{children}</Header>,
-	h4: ({ children }) =>  <Header type='h4'>{children}</Header>,
-	h5: ({ children }) =>  <Header type='h5'>{children}</Header>,
-	h6: ({ children }) =>  <Header type='h6'>{children}</Header>,
+	h1: ({ id, children }) => <Header type='h1' id={id}>{children}</Header>,
+	h2: ({ id, children }) => <Header type='h2' id={id}>{children}</Header>,
+	h3: ({ id, children }) => <Header type='h3' id={id}>{children}</Header>,
+	h4: ({ id, children }) => <Header type='h4' id={id}>{children}</Header>,
+	h5: ({ id, children }) => <Header type='h5' id={id}>{children}</Header>,
+	h6: ({ id, children }) => <Header type='h6' id={id}>{children}</Header>,
 
 	p: ({ children }) => <Text>{children}</Text>,
 

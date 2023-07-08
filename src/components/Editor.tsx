@@ -12,6 +12,7 @@ const EditorContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	overflow-y: scroll;
+	scroll-behavior: smooth;
 `
 
 const Article = styled.article`

@@ -2,8 +2,6 @@ import { type Dispatch, type ReactNode, type SetStateAction, useState } from 're
 import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
-import themeDarkPlus from '~/themes/darkplus'
-
 const AccordionsContainer = styled.div`
 	height: calc(100% - 40px);
 	display: flex;
@@ -15,7 +13,7 @@ interface AccordionContainerProps {
 }
 
 const AccordionContainer = styled.div<AccordionContainerProps>`
-	color: ${themeDarkPlus.colours.sideBar.accordion.headerText};
+	color: ${props => props.theme.colours.sideBar.accordion.headerText};
 	height: ${props => props.isOpen ? 'calc(100% - 40px)' : '20px'};
 	transition: height 0.2s ease-in;
 `
@@ -29,8 +27,8 @@ const AccordionTitleWrapper = styled.span<AccordionTitleWrapperProps>`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border-top: solid ${props => props.isTop ? 0 : 1}px ${themeDarkPlus.colours.sideBar.accordion.border};
-	border-bottom: solid ${props => props.isBottom ? 0 : 1}px ${themeDarkPlus.colours.sideBar.accordion.border};
+	border-top: solid ${props => props.isTop ? 0 : 1}px ${props => props.theme.colours.sideBar.accordion.border};
+	border-bottom: solid ${props => props.isBottom ? 0 : 1}px ${props => props.theme.colours.sideBar.accordion.border};
 `
 
 interface AccordionChildrenWrapperProps {

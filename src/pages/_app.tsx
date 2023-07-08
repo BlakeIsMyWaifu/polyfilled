@@ -2,13 +2,15 @@ import '~/styles/fonts.css'
 import '~/styles/rehype.css'
 
 import { type AppProps } from 'next/app'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import ActivityBar from '~/components/ActivityBar'
 import Footer from '~/components/Footer'
 import Sidebar from '~/components/Sidebar'
 import TabBar from '~/components/TabBar'
+import { useSettingsStore } from '~/state/useSettingsStore'
 import { GlobalStyle } from '~/styles/GlobalStyle'
+import { themes } from '~/themes/themes'
 import { trpc } from '~/utils/trpc'
 
 const AppContainer = styled.div`
@@ -24,8 +26,11 @@ const AppContainer = styled.div`
 `
 
 const App = ({ Component, pageProps }: AppProps) => {
+
+	const theme = useSettingsStore(state => state.theme)
+
 	return (
-		<>
+		<ThemeProvider theme={{ colours: themes[theme].colours }}>
 			<AppContainer>
 				<ActivityBar />
 				<Sidebar />
@@ -35,7 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 			</AppContainer>
 
 			<GlobalStyle />
-		</>
+		</ThemeProvider>
 	)
 }
 

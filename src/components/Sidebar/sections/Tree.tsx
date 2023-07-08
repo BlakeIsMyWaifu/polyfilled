@@ -4,7 +4,6 @@ import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 import useToggle from '~/hooks/useToggle'
-import themeDarkPlus from '~/themes/darkplus'
 
 const TreeContainer = styled.div`
 	padding: 2px;
@@ -19,7 +18,7 @@ interface LineWrapperProps {
 }
 
 const LineWrapper = styled.div<LineWrapperProps>`
-	color: ${themeDarkPlus.colours.sideBar.accordion.headerText};
+	color: ${props => props.theme.colours.sideBar.accordion.headerText};
 	position: relative;
 	display: flex;
 	flex-direction: row;
@@ -27,7 +26,7 @@ const LineWrapper = styled.div<LineWrapperProps>`
 	gap: 4px;
 	padding-left: ${props => props.depth * 16}px;
 	&:hover {
-		background-color: ${themeDarkPlus.colours.activityBar.background};
+		background-color: ${props => props.theme.colours.activityBar.background};
 	}
 `
 

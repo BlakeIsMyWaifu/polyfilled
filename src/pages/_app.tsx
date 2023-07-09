@@ -2,6 +2,7 @@ import '~/styles/fonts.css'
 import '~/styles/rehype.css'
 
 import { type AppProps } from 'next/app'
+import { useEffect, useState } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
 import ActivityBar from '~/components/ActivityBar'
@@ -27,10 +28,15 @@ const AppContainer = styled.div`
 
 const App = ({ Component, pageProps }: AppProps) => {
 
+	// The useState / useEffect is needed otherwise styled components has hydration problems
 	const theme = useSettingsStore(state => state.theme)
+	const [themeColours, setThemeColours] = useState(themes['Dark+'].colours)
+	useEffect(() => {
+		setThemeColours(themes[theme].colours)
+	}, [theme])
 
 	return (
-		<ThemeProvider theme={{ colours: themes[theme].colours }}>
+		<ThemeProvider theme={{ colours: themeColours }}>
 			<AppContainer>
 				<ActivityBar />
 				<Sidebar />

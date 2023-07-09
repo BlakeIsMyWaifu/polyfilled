@@ -1,8 +1,8 @@
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
 import { type ThemeName } from '~/themes/themes'
-import { createActionName, type Slice } from '~/types/storeTypes'
+import { createActionName, type DevTools, type Persist, type Slice } from '~/types/storeTypes'
 
 // State
 
@@ -22,7 +22,7 @@ interface SettingsAction {
 
 const actionName = createActionName<keyof SettingsAction>('settings')
 
-const createSettingsAction: Slice<SettingsStore, SettingsAction> = set => ({
+const createSettingsAction: Slice<SettingsStore, SettingsAction, Middleware> = set => ({
 	setTheme: theme => {
 		set({ theme }, ...actionName('setTheme'))
 	}
@@ -32,9 +32,11 @@ const createSettingsAction: Slice<SettingsStore, SettingsAction> = set => ({
 
 type SettingsStore = SettingsState & SettingsAction
 
-export const useSettingsStore = create<SettingsStore>()(devtools((...a) => ({
+type Middleware = [DevTools, Persist]
+
+export const useSettingsStore = create<SettingsStore>()(devtools(persist((...a) => ({
 	...settingsState,
 	...createSettingsAction(...a)
-}), { name: 'Settings Store' }))
+}), { name: 'polyfilled-settings' }), { name: 'Settings Store' }))
 
 // Selectors

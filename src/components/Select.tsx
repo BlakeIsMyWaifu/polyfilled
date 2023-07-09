@@ -1,4 +1,4 @@
-import { type ChangeEventHandler } from 'react'
+import { type ChangeEventHandler,useId } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -27,17 +27,22 @@ interface SelectProps {
 }
 
 const Select = ({ label, data, defaultValue, onChange }: SelectProps) => {
+
+	const selectId = useId()
+
 	return (
 		<Container>
-			<label>{label}</label>
-			<SelectInput onChange={onChange}>
+			<label htmlFor={selectId}>{label}</label>
+			<SelectInput
+				id={selectId}
+				onChange={onChange}
+				defaultValue={defaultValue}
+			>
 				{
 					data.map(value => {
-						const isSelected = value === defaultValue
 						return <option
 							key={value}
 							value={value}
-							selected={isSelected}
 						>
 							{value}
 						</option>

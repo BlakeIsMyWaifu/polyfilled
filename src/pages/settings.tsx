@@ -19,6 +19,7 @@ const Settings: NextPage = () => {
 			<Select
 				label='Colour Theme'
 				data={typedObject.keys(themes)}
+				/** TODO this doesn't work if loading straight to the settings page */
 				defaultValue={theme}
 				onChange={event => {
 					setTheme(event.target.value as ThemeName)

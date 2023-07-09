@@ -65,7 +65,10 @@ export default makeSource({
 			[
 				rehypePrettyCode,
 				{
-					theme: 'github-dark',
+					theme: {
+						dark: 'dark-plus',
+						light: 'light-plus'
+					},
 					onVisitLine(node) {
 						if (node.children.length === 0) {
 							node.children = [{ type: 'text', value: ' ' }]

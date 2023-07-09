@@ -1,6 +1,9 @@
 import { type MDXComponents } from 'mdx/types'
 import Link from 'next/link'
-import { type CSSProperties } from 'react'
+import { type CSSProperties,type DOMAttributes } from 'react'
+
+import { useSettingsStore } from '~/state/useSettingsStore'
+import { themes } from '~/themes/themes'
 
 import { Header, Text } from './EditorComponents'
 
@@ -38,7 +41,16 @@ const mdxComponents: MDXComponents = {
 
 	p: ({ children }) => <Text>{children}</Text>,
 
-	li: ({ children }) => <li style={styleSize(20, 18, true)}>{children}</li>
+	li: ({ children }) => <li style={styleSize(20, 18, true)}>{children}</li>,
+
+	code: ({ children, ...data }) => {
+		const parsedData = data as (DOMAttributes<HTMLElement> & { 'data-language': string; 'data-theme': string })
+		const { theme } = useSettingsStore.getState()
+		const themeType = themes[theme].type
+		return themeType === parsedData['data-theme']
+			? <code data-language={parsedData['data-language']} data-theme={parsedData['data-theme']}>{children}</code>
+			: null
+	}
 }
 
 export default mdxComponents

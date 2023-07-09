@@ -26,6 +26,7 @@ const themeLightModern: Theme = {
 		},
 		editor: {
 			background: '#ffffff',
+			text: '#000000',
 			lineNumberText: '#171184'
 		},
 		footer: {

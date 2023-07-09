@@ -26,6 +26,7 @@ export interface Theme {
 		};
 		editor: {
 			background: HexColour; // editor.background
+			text: HexColour;
 			lineNumberText: HexColour; // editorLineNumber.activeForeground
 		};
 		footer: {

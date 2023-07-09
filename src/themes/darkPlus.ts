@@ -26,6 +26,7 @@ const themeDarkPlus: Theme = {
 		},
 		editor: {
 			background: '#1e1e1e',
+			text: '#ffffff',
 			lineNumberText: '#c6c6c6'
 		},
 		footer: {

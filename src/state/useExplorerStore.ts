@@ -1,9 +1,9 @@
-// State
-
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-import { createActionName,type Slice } from '~/types/storeTypes'
+import { createActionName, type Slice } from '~/types/storeTypes'
+
+// State
 
 interface ExplorerState {
 	outline: [title: string, id: string, number: number][];

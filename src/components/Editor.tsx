@@ -4,11 +4,10 @@ import styled from 'styled-components'
 import useWindowSize from '~/hooks/useWindowSize'
 import { useApplicationStore } from '~/state/useApplicationStore'
 import { useExplorerStore } from '~/state/useExplorerStore'
-import themeDarkPlus from '~/themes/darkplus'
 
 const EditorContainer = styled.div`
 	grid-area: editor;
-	background-color: ${themeDarkPlus.colours.editor.background};
+	background-color: ${props => props.theme.colours.editor.background};
 	display: flex;
 	flex-direction: row;
 	overflow-y: scroll;
@@ -21,7 +20,7 @@ const Article = styled.article`
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	color: white;
+	color: ${props => props.theme.colours.text};
 `
 
 interface LineNumberContainer {
@@ -39,7 +38,7 @@ const LineNumberContainer = styled.pre<LineNumberContainer>`
 
 const LineNumber = styled.span`
 	min-height: 20px;
-	color: ${themeDarkPlus.colours.editor.lineNumberText};
+	color: ${props => props.theme.colours.editor.lineNumberText};
 	text-align: right;
 	counter-increment: line;
 	&::before {

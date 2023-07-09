@@ -1,14 +1,14 @@
-import { useApplicationStore } from '~/state/useApplicationStore'
-import themeDarkPlus from '~/themes/darkplus'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { FcFile } from 'react-icons/fc'
 import { VscChromeClose } from 'react-icons/vsc'
 import styled from 'styled-components'
 
+import { useApplicationStore } from '~/state/useApplicationStore'
+
 const TabBarContainer = styled.div`
 	grid-area: tabs;
-	background-color: ${themeDarkPlus.colours.tabBar.background};
+	background-color: ${props => props.theme.colours.tabBar.background};
 	display: flex;
 	flex-direction: row;
 `
@@ -24,8 +24,8 @@ const TabContainer = styled.div<TabContainerProps>`
 	align-items: center;
 	gap: 2px;
 	padding: 0 1em;
-	background-color: ${props => themeDarkPlus.colours.tabBar[props.isActive ? 'activeTabBackground' : 'inactiveTabBackground']};
-	color: ${props => themeDarkPlus.colours.tabBar[props.isActive ? 'activeTabText' : 'inactiveTabText']};
+	background-color: ${props => props.theme.colours.tabBar[props.isActive ? 'activeTabBackground' : 'inactiveTabBackground']};
+	color: ${props => props.theme.colours.tabBar[props.isActive ? 'activeTabText' : 'inactiveTabText']};
 	cursor: pointer;
 `
 
@@ -36,7 +36,7 @@ const TabCloseWrapper = styled.span`
 	align-items: center;
 	justify-content: center;
 	&:hover {
-		background-color: ${themeDarkPlus.colours.tabBar.inactiveTabBackground};
+		background-color: ${props => props.theme.colours.tabBar.inactiveTabBackground};
 	}
 `
 

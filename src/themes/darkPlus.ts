@@ -1,44 +1,10 @@
-type HexColour = `#${string}${string}`
-
-interface Theme {
-	type: 'dark' | 'light';
-	colours: {
-		activityBar: {
-			background: HexColour;
-			iconsActive: HexColour;
-			iconsInactive: HexColour;
-		};
-		sideBar: {
-			background: HexColour;
-			headerText: HexColour;
-			accordion: {
-				headerText: HexColour;
-				contentText: HexColour;
-				border: HexColour;
-			};
-		};
-		tabBar: {
-			background: HexColour;
-			activeTabBackground: HexColour;
-			activeTabText: HexColour;
-			inactiveTabBackground: HexColour;
-			inactiveTabText: HexColour;
-		};
-		editor: {
-			background: HexColour;
-			lineNumberText: HexColour;
-		};
-		footer: {
-			background: HexColour;
-			hoverBackground: HexColour;
-			text: HexColour;
-		};
-	};
-}
+import { type Theme } from '~/types/theme'
 
 const themeDarkPlus: Theme = {
 	type: 'dark',
 	colours: {
+		focusBorder: '#007fd4',
+		text: '#ffffff',
 		activityBar: {
 			background: '#333333',
 			iconsActive: '#ffffff',
@@ -68,9 +34,16 @@ const themeDarkPlus: Theme = {
 			background: '#414339',
 			hoverBackground: '#585a51',
 			text: '#ffffff'
+		},
+		select: {
+			background: '#3c3c3c',
+			border: '#3c3c3c',
+			highlight: '#04395e'
 		}
 	}
 }
+
+export default themeDarkPlus
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _themeDarkPlus = {
@@ -875,5 +848,3 @@ const _themeDarkPlus = {
 		'window.inactiveBorder': null
 	}
 }
-
-export default themeDarkPlus

@@ -2,7 +2,6 @@ import { type ReactElement } from 'react'
 import styled from 'styled-components'
 
 import { type SidebarSection, useApplicationStore } from '~/state/useApplicationStore'
-import themeDarkPlus from '~/themes/darkplus'
 
 import Explorer from './sections/Explorer'
 import Search from './sections/Search'
@@ -12,13 +11,13 @@ const SidebarContainer = styled.div`
 	grid-area: sidebar;
 	width: 256px;
 	max-height: calc(100vh - 24px);
-	background-color: ${themeDarkPlus.colours.sideBar.background};
+	background-color: ${props => props.theme.colours.sideBar.background};
 	display: flex;
 	flex-direction: column;
 `
 
 const SidebarHeader = styled.p`
-	color: ${themeDarkPlus.colours.sideBar.headerText};
+	color: ${props => props.theme.colours.sideBar.headerText};
 	padding: 10px 20px;
 	font-size: 0.8em;
 `

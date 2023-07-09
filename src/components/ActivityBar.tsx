@@ -1,13 +1,13 @@
+import Link from 'next/link'
 import { type ReactElement } from 'react'
 import { VscFiles, VscSearch, VscSettingsGear, VscSourceControl } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 import { type SidebarSection, useApplicationStore } from '~/state/useApplicationStore'
-import themeDarkPlus from '~/themes/darkplus'
 
 const ActivityBarContainer = styled.div`
 	grid-area: activity;
-	background-color: ${themeDarkPlus.colours.activityBar.background};
+	background-color: ${props => props.theme.colours.activityBar.background};
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -22,7 +22,9 @@ const ActivityBar = () => {
 				<Icon title='sourceControl' icon={<VscSourceControl size='28px' />} />
 			</div>
 			<div>
-				<Icon icon={<VscSettingsGear size='28px' />} />
+				<Link href='/settings'>
+					<Icon icon={<VscSettingsGear size='28px' />} />
+				</Link>
 			</div>
 		</ActivityBarContainer>
 	)
@@ -39,17 +41,17 @@ const IconWrapper = styled.div<IconWrapperProps>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: ${props => themeDarkPlus.colours.activityBar[props.isActive ? 'iconsActive' : 'iconsInactive']};
+	color: ${props => props.theme.colours.activityBar[props.isActive ? 'iconsActive' : 'iconsInactive']};
 	cursor: pointer;
 	&:hover {
-		color: ${themeDarkPlus.colours.activityBar.iconsActive};
+		color: ${props => props.theme.colours.activityBar.iconsActive};
 	}
 	&::before {
 		content: "";
 		display: block;
 		width: ${props => props.isActive ? '2px' : '0'};
 		height: 48px;
-		background: ${themeDarkPlus.colours.activityBar.iconsActive};
+		background: ${props => props.theme.colours.activityBar.iconsActive};
 		left: 0;
 		top: 0;
 		position: absolute;

@@ -4,11 +4,9 @@ import { type CSSProperties,useMemo } from 'react'
 import { VscGithub, VscLiveShare, VscSourceControl } from 'react-icons/vsc'
 import styled from 'styled-components'
 
-import themeDarkPlus from '~/themes/darkplus'
-
 const FooterContainer = styled.div`
 	grid-area: footer;
-	background-color: ${themeDarkPlus.colours.footer.background};
+	background-color: ${props => props.theme.colours.footer.background};
 	display: flex;
 	flex-direction: row;
 	gap: 12px;
@@ -20,14 +18,14 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.span<WrapperProps>`
-	color: ${themeDarkPlus.colours.footer.text};
+	color: ${props => props.theme.colours.footer.text};
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: 4px;
 	padding: 0 4px;
 	&:hover {
-		background-color: ${themeDarkPlus.colours.footer.hoverBackground};
+		background-color: ${props => props.theme.colours.footer.hoverBackground};
 		cursor: ${props => props.cursor};
 	}
 `

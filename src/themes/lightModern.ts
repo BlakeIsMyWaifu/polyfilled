@@ -3,6 +3,8 @@ import { type Theme } from '~/types/theme'
 const themeLightModern: Theme = {
 	type: 'light',
 	colours: {
+		focusBorder: '#005fb8',
+		text: '#3b3b3b',
 		activityBar: {
 			background: '#f8f8f8',
 			iconsActive: '#1f1f1f',
@@ -26,13 +28,17 @@ const themeLightModern: Theme = {
 		},
 		editor: {
 			background: '#ffffff',
-			text: '#000000',
 			lineNumberText: '#171184'
 		},
 		footer: {
 			background: '#f8f8f8',
 			hoverBackground: '#585a51',
 			text: '#3b3b3b'
+		},
+		select: {
+			background: '#ffffff',
+			border: '#cecece',
+			highlight: '#e8e8e8'
 		}
 	}
 }

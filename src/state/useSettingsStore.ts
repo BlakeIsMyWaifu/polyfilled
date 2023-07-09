@@ -1,13 +1,13 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-import { type themes } from '~/themes/themes'
+import { type ThemeName } from '~/themes/themes'
 import { createActionName, type Slice } from '~/types/storeTypes'
 
 // State
 
 interface SettingsState {
-	theme: keyof typeof themes;
+	theme: ThemeName;
 }
 
 const settingsState: SettingsState = {

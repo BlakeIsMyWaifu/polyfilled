@@ -3,6 +3,8 @@ import { type Theme } from '~/types/theme'
 const themeDarkPlus: Theme = {
 	type: 'dark',
 	colours: {
+		focusBorder: '#007fd4',
+		text: '#ffffff',
 		activityBar: {
 			background: '#333333',
 			iconsActive: '#ffffff',
@@ -26,13 +28,17 @@ const themeDarkPlus: Theme = {
 		},
 		editor: {
 			background: '#1e1e1e',
-			text: '#ffffff',
 			lineNumberText: '#c6c6c6'
 		},
 		footer: {
 			background: '#414339',
 			hoverBackground: '#585a51',
 			text: '#ffffff'
+		},
+		select: {
+			background: '#3c3c3c',
+			border: '#3c3c3c',
+			highlight: '#04395e'
 		}
 	}
 }

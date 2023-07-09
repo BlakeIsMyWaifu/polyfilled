@@ -20,7 +20,7 @@ const Article = styled.article`
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	color: ${props => props.theme.colours.editor.text};
+	color: ${props => props.theme.colours.text};
 `
 
 interface LineNumberContainer {

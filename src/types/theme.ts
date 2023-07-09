@@ -1,8 +1,14 @@
+import { type LooseAutocomplete } from '~/types/looseAutocomplete'
+
 type HexColour = `#${string}${string}`
+
+type TextColour = LooseAutocomplete<'#ffffff' | '#3b3b3b'> & HexColour
 
 export interface Theme {
 	type: 'dark' | 'light';
 	colours: {
+		focusBorder: HexColour; // focusBorder
+		text: TextColour;
 		activityBar: {
 			background: HexColour; // activityBar.background
 			iconsActive: HexColour; // activityBar.foreground
@@ -12,27 +18,31 @@ export interface Theme {
 			background: HexColour; // sideBar.background
 			headerText: HexColour; // sideBarTitle.foreground
 			accordion: {
-				headerText: HexColour;
-				contentText: HexColour;
+				headerText: TextColour;
+				contentText: TextColour;
 				border: HexColour; // sideBarSectionHeader.border
 			};
 		};
 		tabBar: {
 			background: HexColour; // tab.border
 			activeTabBackground: HexColour; // tab.activeBackground
-			activeTabText: HexColour; // tab.activeForeground
+			activeTabText: TextColour; // tab.activeForeground
 			inactiveTabBackground: HexColour; // tab.inactiveBackground
-			inactiveTabText: HexColour; // tab.inactiveForeground
+			inactiveTabText: TextColour; // tab.inactiveForeground
 		};
 		editor: {
 			background: HexColour; // editor.background
-			text: HexColour;
 			lineNumberText: HexColour; // editorLineNumber.activeForeground
 		};
 		footer: {
 			background: HexColour; // statusBar.background
 			hoverBackground: HexColour;
-			text: HexColour; // statusBar.foreground
+			text: TextColour; // statusBar.foreground
+		};
+		select: {
+			background: HexColour; // settings.dropdownBackground
+			border: HexColour; // settings.dropdownBorder
+			highlight: HexColour; // list.activeSelectionBackground
 		};
 	};
 }

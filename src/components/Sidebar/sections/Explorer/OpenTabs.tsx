@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { VscFile } from 'react-icons/vsc'
+import { FcFile } from 'react-icons/fc'
 
 import { useApplicationStore } from '~/state/useApplicationStore'
 
@@ -10,9 +10,9 @@ const OpenTabs = () => {
 	const tabs = useApplicationStore(state => state.tabs)
 
 	const treeStructure = useMemo(() => {
-		return tabs.map(tab => ({
-			name: tab,
-			icon: <VscFile />,
+		return tabs.map((tab: string) => ({
+			name: tab.replace('/blog/', ''),
+			icon: <FcFile />,
 			link: tab
 		} satisfies TreeStructure[number]))
 	}, [tabs])

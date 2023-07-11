@@ -5,6 +5,9 @@ import { VscChromeClose } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 import { useApplicationStore } from '~/state/useApplicationStore'
+import { getFileExtensionFromPath, getFileNameFromPath } from '~/utils/fileUtilities'
+
+import Icon from './Icon'
 
 const TabBarContainer = styled.div`
 	grid-area: tabs;
@@ -65,9 +68,9 @@ const TabBar = () => {
 		<TabBarContainer>
 			{
 				tabs.map(tab => {
-					const tabName = tab.split('/').at(-1) || 'index'
+					const tabName = getFileNameFromPath(tab)
 					const isActive = tab === currentTab
-					const fileExtension = tab.startsWith('/blog') ? 'md' : 'tsx'
+					const fileExtension = getFileExtensionFromPath(tab)
 					return <TabContainer
 						key={tab}
 						isActive={isActive}
@@ -80,7 +83,7 @@ const TabBar = () => {
 							}
 						}}
 					>
-						<FcFile />
+						<Icon extensionType={fileExtension} />
 						<p>{tabName}.{fileExtension}</p>
 						{
 							isActive && <TabCloseWrapper onClick={() => handleCloseTab(tab)}>

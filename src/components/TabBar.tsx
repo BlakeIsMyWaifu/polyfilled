@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { FcFile } from 'react-icons/fc'
 import { VscChromeClose } from 'react-icons/vsc'
 import styled from 'styled-components'
 

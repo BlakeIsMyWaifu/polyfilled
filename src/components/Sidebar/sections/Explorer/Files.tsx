@@ -1,3 +1,5 @@
+import '~/*/../../public/icons/react.webp'
+
 import { FcFile, FcFolder, FcOpenedFolder } from 'react-icons/fc'
 
 import { trpc } from '~/utils/trpc'

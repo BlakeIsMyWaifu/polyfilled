@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { fileExtensionIcons } from '~/utils/fileExtensionIcons'
+import { fileExtensionNames } from '~/utils/fileUtilities'
 import { trpc } from '~/utils/trpc'
 
 import Tree, { File, type TreeStructure } from '../Tree'
@@ -42,7 +42,7 @@ const CommitTree = ({ sha }: CommitTreeProps) => {
 	return commitFiles.isSuccess && commitFiles.data.files?.map(({ filename }) => {
 
 		const fileExtension = filename.split('.').at(-1) ?? 'json'
-		const icon = fileExtensionIcons[icons[filename] ?? fileExtension] ?? 'json'
+		const icon = fileExtensionNames[icons[filename] ?? fileExtension] ?? 'json'
 
 		return (
 			<File

@@ -1,7 +1,4 @@
-import '~/*/../../public/icons/react.webp'
-
-import { FcFile, FcFolder, FcOpenedFolder } from 'react-icons/fc'
-
+import Icon from '~/components/Icon'
 import { trpc } from '~/utils/trpc'
 
 import Tree from '../Tree'
@@ -15,24 +12,24 @@ const Files = () => {
 	return <Tree structure={[
 		{
 			name: 'pages',
-			icon: <FcOpenedFolder />,
-			closedIcon: <FcFolder />,
+			icon: <Icon extensionType='folder-views-open' />,
+			closedIcon: <Icon extensionType='folder-views' />,
 			open: true,
 			children: [
 				{
 					name: 'blog',
-					icon: <FcOpenedFolder />,
-					closedIcon: <FcFolder />,
+					icon: <Icon extensionType='folder-markdown-open' />,
+					closedIcon: <Icon extensionType='folder-markdown' />,
 					open: false,
 					children: (allPosts ?? []).map(slug => ({
 						name: slug,
-						icon: <FcFile />,
+						icon: <Icon extensionType='md' />,
 						link: `/blog/${slug}`
 					}))
 				},
 				{
 					name: 'index.tsx',
-					icon: <FcFile />,
+					icon: <Icon extensionType='tsx' />,
 					link: '/'
 				}
 			]

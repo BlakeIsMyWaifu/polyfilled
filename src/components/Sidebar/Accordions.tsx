@@ -3,7 +3,7 @@ import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 const AccordionsContainer = styled.div`
-	height: calc(100% - 40px);
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 `

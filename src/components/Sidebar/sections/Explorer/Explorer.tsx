@@ -1,6 +1,7 @@
 import Accordions from '~/components/Sidebar/Accordions'
 
 import Files from './Files'
+import OpenTabs from './OpenTabs'
 import Outline from './Outline'
 
 const Explorer = () => {
@@ -14,8 +15,8 @@ const Explorer = () => {
 			children: <Outline />
 		},
 		{
-			name: 'open editors',
-			children: null
+			name: 'open tabs',
+			children: <OpenTabs />
 		}
 	]} />
 

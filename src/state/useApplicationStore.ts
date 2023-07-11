@@ -43,8 +43,9 @@ const createApplicationAction: Slice<ApplicationStore, ApplicationAction> = (set
 	addTab: (newTab, changeCurrentTab) => {
 		const { tabs } = get()
 		if (!tabs.includes(newTab)) {
-			tabs.unshift(newTab)
-			set({ tabs }, ...actionName('addTab'))
+			const cloneTabs = structuredClone(tabs)
+			cloneTabs.unshift(newTab)
+			set({ tabs: cloneTabs }, ...actionName('addTab'))
 		}
 		if (changeCurrentTab) {
 			get().changeCurrentTab(newTab)

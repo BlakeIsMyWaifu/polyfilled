@@ -1,22 +1,20 @@
 import Image from 'next/image'
+import { useState } from 'react'
 
 const fileIconExtensions: Record<string, string> = {
 	md: 'markdown',
+	mdx: 'markdown',
 	gitignore: 'git',
 	eslintrc: 'eslint',
 	ico: 'favicon',
-	mjs: 'next',
+	mjs: 'javascript',
 	js: 'javascript',
 	ts: 'typescript',
 	jsx: 'react',
 	tsx: 'react',
-
-	//? Special cases:
-
-	readme: 'readme',
-	package: 'nodejs',
-	pnpm: 'pnpm',
-	tsconfig: 'tsconfig'
+	env: 'tune',
+	webp: 'image',
+	ttf: 'font'
 }
 
 interface IconProps {
@@ -24,12 +22,16 @@ interface IconProps {
 }
 
 const Icon = ({ extensionType }: IconProps) => {
+
+	const [imageSrc, setImageSrc] = useState(fileIconExtensions[extensionType.toLowerCase()] ?? extensionType.toLowerCase())
+
 	return (
 		<Image
-			src={`/icons/${fileIconExtensions[extensionType] ?? extensionType}.webp`}
+			src={`/icons/${imageSrc}.webp`}
+			onError={() => setImageSrc('json')}
 			alt={extensionType}
-			width={16}
-			height={16}
+			width={18}
+			height={18}
 		/>
 	)
 }

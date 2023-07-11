@@ -1,27 +1,14 @@
-export const fileExtensionNames: Record<string, string> = {
-	md: 'markdown',
-	yaml: 'yaml',
-	json: 'json',
-	gitignore: 'git',
-	eslintrc: 'eslint',
-	ico: 'favicon',
-	mjs: 'next',
-	css: 'css',
-	js: 'javascript',
-	ts: 'typescript',
-	jsx: 'react',
-	tsx: 'react',
-
-	//? Special cases:
-
-	readme: 'readme',
-	package: 'nodejs',
-	pnpm: 'pnpm',
-	tsconfig: 'tsconfig'
+const fileExtensionOverrides: Record<string, string> = {
+	'.env.example': 'tune',
+	'README.md': 'readme',
+	'package.json': 'nodejs',
+	'pnpm-lock.yaml': 'pnpm',
+	'tsconfig.json': 'tsconfig',
+	'next.config.mjs': 'next'
 }
 
 export const getFileExtension = (fileName: string) => {
-	return fileName.split('.').at(-1)
+	return fileExtensionOverrides[fileName] ?? (fileName.split('.').at(-1) || 'json')
 }
 
 export const getFileExtensionFromPath = (filePath: string) => {

@@ -1,7 +1,6 @@
-import { type ReactElement } from 'react'
 import styled from 'styled-components'
 
-import { type SidebarSection, useApplicationStore } from '~/state/useApplicationStore'
+import { useApplicationStore } from '~/state/useApplicationStore'
 
 import Explorer from './sections/Explorer'
 import Search from './sections/Search'
@@ -22,11 +21,17 @@ const SidebarHeader = styled.p`
 	font-size: 0.8em;
 `
 
-const sections: Record<SidebarSection, ReactElement> = {
-	explorer: <Explorer />,
-	search: <Search />,
-	sourceControl: <SourceControl />
+interface SectionWrapperProps {
+	isActive: boolean;
 }
+
+const SectionWrapper = styled.div<SectionWrapperProps>`
+	all: inherit;
+	visibility: ${props => props.isActive ? 'visible' : 'hidden'};
+	position: absolute;
+	bottom: 0px;
+	top: 35px;
+`
 
 const Sidebar = () => {
 
@@ -35,7 +40,15 @@ const Sidebar = () => {
 	return (
 		<SidebarContainer>
 			<SidebarHeader>{currentSidebar.toUpperCase()}</SidebarHeader>
-			{sections[currentSidebar]}
+			<SectionWrapper isActive={currentSidebar === 'explorer'}>
+				<Explorer />
+			</SectionWrapper>
+			<SectionWrapper isActive={currentSidebar === 'search'}>
+				<Search />
+			</SectionWrapper>
+			<SectionWrapper isActive={currentSidebar === 'sourceControl'}>
+				<SourceControl />
+			</SectionWrapper>
 		</SidebarContainer>
 	)
 }

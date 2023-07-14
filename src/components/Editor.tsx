@@ -3,6 +3,7 @@ import { type ReactNode,useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import useWindowSize from '~/hooks/useWindowSize'
+import { useApplicationStore } from '~/state/useApplicationStore'
 import { useExplorerStore } from '~/state/useExplorerStore'
 
 const EditorContainer = styled.div`
@@ -75,15 +76,19 @@ const Editor = ({ children }: EditorProps) => {
 		setOutline(outline)
 	}, [articleRef, asPath, setOutline])
 
+	const isMobile = useApplicationStore(state => state.isMobile)
+
 	return (
 		<EditorContainer>
-			<LineNumberContainer articleHeight={articleHeight}>
-				{
-					Array.from({ length: ~~(articleHeight / 20) + (articleHeight > height ? 8 : 0) }).map((_, i) => {
-						return <LineNumber key={i} />
-					})
-				}
-			</LineNumberContainer>
+			{
+				!isMobile && <LineNumberContainer articleHeight={articleHeight}>
+					{
+						Array.from({ length: ~~(articleHeight / 20) + (articleHeight > height ? 8 : 0) }).map((_, i) => {
+							return <LineNumber key={i} />
+						})
+					}
+				</LineNumberContainer>
+			}
 
 			<Article ref={articleRef}>
 				{children}

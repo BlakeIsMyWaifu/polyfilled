@@ -11,9 +11,9 @@ const listPadding: CSSProperties = {
 	paddingLeft: '36px'
 }
 
-export const styleSize = (height: number, font: number, fixHeight = false): CSSProperties => ({
-	height: fixHeight ? `${height}px` : undefined,
-	lineHeight: `${height}px`,
+export const styleSize = (height: number, font: number, fixHeight = true): CSSProperties => ({
+	minHeight: fixHeight ? `${height}px` : undefined,
+	lineHeight: `${font}px`,
 	fontSize: `${font}px`
 })
 
@@ -41,7 +41,7 @@ const mdxComponents: MDXComponents = {
 
 	p: ({ children }) => <Text>{children}</Text>,
 
-	li: ({ children }) => <li style={styleSize(20, 18, true)}>{children}</li>,
+	li: ({ children }) => <li style={styleSize(20, 18)}>{children}</li>,
 
 	code: ({ children, ...data }) => {
 		const parsedData = data as (DOMAttributes<HTMLElement> & { 'data-language': string; 'data-theme': string })

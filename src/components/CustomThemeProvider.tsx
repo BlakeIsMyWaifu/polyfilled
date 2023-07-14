@@ -21,10 +21,13 @@ const CustomThemeProvider = ({ children }: CustomThemeProviderProps) => {
 
 	const isMobile = useApplicationStore(state => state.isMobile)
 	const setIsMobile = useApplicationStore(state => state.setIsMobile)
+	const changeSidebar = useApplicationStore(state => state.changeSidebar)
 	const { width } = useWindowSize()
 	useEffect(() => {
-		setIsMobile(width < 768)
-	}, [setIsMobile, width])
+		const _isMobile = width < 768 && width !== 0
+		setIsMobile(_isMobile)
+		if (_isMobile) changeSidebar(null)
+	}, [changeSidebar, setIsMobile, width])
 
 	return (
 		<ThemeProvider theme={{ colours, isMobile }}>

@@ -34,6 +34,10 @@ const TabContainer = styled.div<TabContainerProps>`
 	cursor: pointer;
 `
 
+const TabText = styled.p`
+	white-space: nowrap;
+`
+
 const TabCloseWrapper = styled.span`
 	height: 20px;
 	aspect-ratio: 1 / 1;
@@ -86,7 +90,7 @@ const TabBar = () => {
 						}}
 					>
 						<Icon extensionType={fileExtension} />
-						<p>{tabName}.{fileExtension}</p>
+						<TabText>{tabName}.{fileExtension}</TabText>
 						{
 							isActive && <TabCloseWrapper onClick={() => handleCloseTab(tab)}>
 								<VscChromeClose />

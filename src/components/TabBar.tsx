@@ -9,10 +9,13 @@ import { getFileExtensionFromPath, getFileNameFromPath } from '~/utils/fileUtili
 import Icon from './Icon'
 
 const TabBarContainer = styled.div`
-	grid-area: tabs;
+	min-height: 36px;
+	max-height: 36px;
 	background-color: ${props => props.theme.colours.tabBar.background};
 	display: flex;
 	flex-direction: row;
+	overflow-y: hidden;
+	overflow-x: auto;
 `
 
 interface TabContainerProps {

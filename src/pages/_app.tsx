@@ -2,23 +2,22 @@ import '~/styles/fonts.css'
 import '~/styles/rehype.css'
 
 import { type AppProps } from 'next/app'
-import { useEffect, useState } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import styled from 'styled-components'
 
 import ActivityBar from '~/components/ActivityBar'
+import CustomThemeProvider from '~/components/CustomThemeProvider'
 import Footer from '~/components/Footer'
 import Sidebar from '~/components/Sidebar'
 import TabBar from '~/components/TabBar'
-import { useSettingsStore } from '~/state/useSettingsStore'
+import { useApplicationStore } from '~/state/useApplicationStore'
 import { GlobalStyle } from '~/styles/GlobalStyle'
-import { themes } from '~/themes/themes'
 import { trpc } from '~/utils/trpc'
 
 const AppContainer = styled.div`
 	display: grid;
-	grid-template-columns: 48px 256px auto;
-	grid-template-rows: 36px auto 24px;
-	grid-template-areas: "activity sidebar tabs" "activity sidebar editor" "footer footer footer";
+	grid-template-columns: 48px auto;
+	grid-template-rows: auto 24px;
+	grid-template-areas: "activity main" "footer footer";
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -26,27 +25,47 @@ const AppContainer = styled.div`
 	height: 100vh;
 `
 
+const HorizontalContainer = styled.div`
+	grid-area: main;
+	display: flex;
+	flex-direction: row;
+	max-width: calc(100vw - 48px);
+`
+
+interface VerticalContainerProps {
+	sidebarIsOpen: boolean;
+}
+
+const VerticalContainer = styled.div<VerticalContainerProps>`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	visibility: ${props => props.theme.isMobile && props.sidebarIsOpen ? 'collapse' : 'visible'};
+`
+
 const App = ({ Component, pageProps }: AppProps) => {
 
-	// The useState / useEffect is needed otherwise styled components has hydration problems
-	const theme = useSettingsStore(state => state.theme)
-	const [themeColours, setThemeColours] = useState(themes['Dark+'].colours)
-	useEffect(() => {
-		setThemeColours(themes[theme].colours)
-	}, [theme])
+	const currentSidebar = useApplicationStore(state => state.currentSidebar)
 
 	return (
-		<ThemeProvider theme={{ colours: themeColours }}>
+		<CustomThemeProvider>
+
 			<AppContainer>
 				<ActivityBar />
-				<Sidebar />
-				<TabBar />
 				<Footer />
-				<Component {...pageProps} />
+				<HorizontalContainer>
+					<Sidebar />
+					<VerticalContainer sidebarIsOpen={!!currentSidebar}>
+						<TabBar />
+						<Component {...pageProps} />
+					</VerticalContainer>
+				</HorizontalContainer>
 			</AppContainer>
 
 			<GlobalStyle />
-		</ThemeProvider>
+
+		</CustomThemeProvider>
 	)
 }
 

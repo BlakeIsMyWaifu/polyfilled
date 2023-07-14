@@ -4,6 +4,7 @@ import { VscChevronDown, VscChevronRight } from 'react-icons/vsc'
 import styled from 'styled-components'
 
 import useToggle from '~/hooks/useToggle'
+import { useApplicationStore } from '~/state/useApplicationStore'
 
 const TreeContainer = styled.div`
 	padding: 2px;
@@ -126,6 +127,9 @@ type FileProps = FileBranch & BranchProps
 
 export const File = ({ name, icon, link, depth }: FileProps) => {
 
+	const isMobile = useApplicationStore(state => state.isMobile)
+	const changeSidebar = useApplicationStore(state => state.changeSidebar)
+
 	const inner = <>
 		{icon}
 		{name}
@@ -135,9 +139,15 @@ export const File = ({ name, icon, link, depth }: FileProps) => {
 		<LineWrapper depth={depth}>
 			{
 				link
-					? <Link href={link} style={{
-						all: 'unset'
-					}}>
+					? <Link
+						href={link}
+						style={{
+							all: 'unset'
+						}}
+						onClick={() => {
+							if (!isMobile) return
+							changeSidebar(null)
+						}}>
 						{inner}
 					</Link>
 					: inner

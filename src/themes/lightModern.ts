@@ -39,6 +39,10 @@ const themeLightModern: Theme = {
 			background: '#ffffff',
 			border: '#cecece',
 			highlight: '#e8e8e8'
+		},
+		codeblock: {
+			background: '#ffffff',
+			border: '#3e3d32'
 		}
 	}
 }

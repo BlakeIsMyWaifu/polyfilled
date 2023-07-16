@@ -69,7 +69,7 @@ const Icon = ({ icon, title }: IconProps) => {
 	const changeSidebar = useApplicationStore(state => state.changeSidebar)
 
 	return (
-		<IconWrapper isActive={currentSide === title} onClick={() => title && changeSidebar(title)}>
+		<IconWrapper isActive={currentSide === title} onClick={() => title && changeSidebar(currentSide === title ? null : title)}>
 			{icon}
 		</IconWrapper>
 	)

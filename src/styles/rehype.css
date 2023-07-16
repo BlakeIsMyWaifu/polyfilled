@@ -11,3 +11,17 @@
 	display: inline-block;
 	height: 20px;
 }
+
+code {
+	counter-reset: line;
+}
+
+code > .line::before {
+	counter-increment: line;
+	content: counter(line);
+	display: inline-block;
+	width: 1rem;
+	margin-right: 1.5rem;
+	text-align: right;
+	color: gray;
+}

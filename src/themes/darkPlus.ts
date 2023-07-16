@@ -39,6 +39,10 @@ const themeDarkPlus: Theme = {
 			background: '#3c3c3c',
 			border: '#3c3c3c',
 			highlight: '#04395e'
+		},
+		codeblock: {
+			background: '#3e3d32',
+			border: '#3e3d32'
 		}
 	}
 }

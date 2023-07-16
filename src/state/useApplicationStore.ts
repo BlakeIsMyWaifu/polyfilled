@@ -11,24 +11,27 @@ export type SidebarSection =
 	| 'sourceControl'
 
 interface ApplicationState {
-	currentSidebar: SidebarSection;
+	currentSidebar: SidebarSection | null;
 	currentTab: string;
 	tabs: string[];
+	isMobile: boolean;
 }
 
 const applicationState: ApplicationState = {
 	currentSidebar: 'explorer',
 	currentTab: '',
-	tabs: []
+	tabs: [],
+	isMobile: false
 }
 
 // Action
 
 interface ApplicationAction {
-	changeSidebar: (sidebar: SidebarSection) => void;
+	changeSidebar: (sidebar: ApplicationState['currentSidebar']) => void;
 	changeCurrentTab: (tab: string) => void;
 	addTab: (tab: string, changeCurrentTab: boolean) => void;
 	removeTab: (tab: string) => void;
+	setIsMobile: (isMobile: boolean) => void;
 }
 
 const actionName = createActionName<keyof ApplicationAction>('application')
@@ -55,6 +58,9 @@ const createApplicationAction: Slice<ApplicationStore, ApplicationAction> = (set
 		set(state => ({
 			tabs: state.tabs.filter(t => t !== tab)
 		}), ...actionName('removeTab'))
+	},
+	setIsMobile: isMobile => {
+		set({ isMobile }, ...actionName('setIsMobile'))
 	}
 })
 

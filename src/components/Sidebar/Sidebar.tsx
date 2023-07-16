@@ -6,13 +6,17 @@ import Explorer from './sections/Explorer'
 import Search from './sections/Search'
 import SourceControl from './sections/SourceControl'
 
-const SidebarContainer = styled.div`
-	grid-area: sidebar;
-	width: 256px;
-	max-height: calc(100vh - 24px);
+interface SidebarContainerProps {
+	isOpen: boolean;
+}
+
+const SidebarContainer = styled.div<SidebarContainerProps>`
 	background-color: ${props => props.theme.colours.sideBar.background};
 	display: flex;
 	flex-direction: column;
+	position: relative;
+	min-width: ${props => props.theme.isMobile ? '100%' : '256px'};
+	visibility: ${props => props.isOpen ? 'visible' : 'collapse'};
 `
 
 const SidebarHeader = styled.p`
@@ -27,10 +31,10 @@ interface SectionWrapperProps {
 
 const SectionWrapper = styled.div<SectionWrapperProps>`
 	all: inherit;
-	visibility: ${props => props.isActive ? 'visible' : 'hidden'};
+	visibility: ${props => props.isActive ? 'visible' : 'collapse'};
 	position: absolute;
-	bottom: 0px;
 	top: 35px;
+	bottom: 0;
 `
 
 const Sidebar = () => {
@@ -38,8 +42,8 @@ const Sidebar = () => {
 	const currentSidebar = useApplicationStore(state => state.currentSidebar)
 
 	return (
-		<SidebarContainer>
-			<SidebarHeader>{currentSidebar.toUpperCase()}</SidebarHeader>
+		<SidebarContainer isOpen={!!currentSidebar}>
+			<SidebarHeader>{currentSidebar?.toUpperCase()}</SidebarHeader>
 			<SectionWrapper isActive={currentSidebar === 'explorer'}>
 				<Explorer />
 			</SectionWrapper>

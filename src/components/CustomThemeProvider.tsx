@@ -24,12 +24,17 @@ const CustomThemeProvider = ({ children }: CustomThemeProviderProps) => {
 
 	const isMobile = useApplicationStore(state => state.isMobile)
 	const setIsMobile = useApplicationStore(state => state.setIsMobile)
+	const currentSidebar = useApplicationStore(state => state.currentSidebar)
 	const changeSidebar = useApplicationStore(state => state.changeSidebar)
 	const { width } = useWindowSize()
 	useEffect(() => {
 		const _isMobile = width < 768 && width !== 0
 		setIsMobile(_isMobile)
-		if (_isMobile) changeSidebar(null)
+		const updatedSidebar = _isMobile ? null : (currentSidebar ?? 'explorer')
+		changeSidebar(updatedSidebar)
+	// currentSidebar shouldn't be included otherwise you can't open a sidebar on mobile
+	// this effect should be broken down at some point
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [changeSidebar, setIsMobile, width])
 
 	return (

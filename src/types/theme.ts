@@ -1,11 +1,13 @@
 import { type LooseAutocomplete } from '~/types/looseAutocomplete'
 
+export type ThemeType = 'dark' | 'light'
+
 type HexColour = `#${string}${string}`
 
 type TextColour = LooseAutocomplete<'#ffffff' | '#3b3b3b'> & HexColour
 
 export interface Theme {
-	type: 'dark' | 'light';
+	type: ThemeType;
 	colours: {
 		focusBorder: HexColour; // focusBorder
 		text: TextColour;
@@ -43,6 +45,10 @@ export interface Theme {
 			background: HexColour; // settings.dropdownBackground
 			border: HexColour; // settings.dropdownBorder
 			highlight: HexColour; // list.activeSelectionBackground
+		};
+		codeblock: {
+			background: HexColour;
+			border: HexColour;
 		};
 	};
 }

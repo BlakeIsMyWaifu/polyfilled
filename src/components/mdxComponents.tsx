@@ -5,11 +5,13 @@ import { type CSSProperties,type DOMAttributes } from 'react'
 import { useSettingsStore } from '~/state/useSettingsStore'
 import { themes } from '~/themes/themes'
 
-import { Header, Text } from './EditorComponents'
+import { CodeBlockPre, Header, Text } from './EditorComponents'
 
 const listPadding: CSSProperties = {
 	paddingLeft: '36px'
 }
+
+type CodeData<T extends HTMLElement = HTMLElement> = (DOMAttributes<T> & { 'data-language': string; 'data-theme': string })
 
 export const styleSize = (height: number, font: number, fixHeight = true): CSSProperties => ({
 	minHeight: fixHeight ? `${height}px` : undefined,
@@ -44,11 +46,18 @@ const mdxComponents: MDXComponents = {
 	li: ({ children }) => <li style={styleSize(20, 18)}>{children}</li>,
 
 	code: ({ children, ...data }) => {
-		const parsedData = data as (DOMAttributes<HTMLElement> & { 'data-language': string; 'data-theme': string })
+		const parsedData = data as CodeData
+		return <code data-language={parsedData['data-language']} data-theme={parsedData['data-theme']}>{children}</code>
+	},
+	pre: ({ children, ...data }) => {
+		const parsedData = data as CodeData<HTMLPreElement>
 		const { theme } = useSettingsStore.getState()
 		const themeType = themes[theme].type
 		return themeType === parsedData['data-theme']
-			? <code data-language={parsedData['data-language']} data-theme={parsedData['data-theme']}>{children}</code>
+			? <CodeBlockPre
+				data-language={parsedData['data-language']}
+				data-theme={parsedData['data-theme']}
+			>{children}</CodeBlockPre>
 			: null
 	}
 }

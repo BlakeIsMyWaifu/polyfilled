@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-max-props-per-line */
 import { forwardRef, type ReactElement, type ReactNode, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 
 import useWindowSize from '~/hooks/useWindowSize'
 
@@ -50,4 +51,13 @@ interface Children {
 	children: ReactNode;
 }
 
-export const Text = ({ children }: Children) => <p style={styleSize(20, 18, false)}>{children}</p>
+export const Text = ({ children }: Children) => <p style={styleSize(20, 20, false)}>{children}</p>
+
+export const CodeBlockPre = styled.pre`
+	background-color: ${props => props.theme.colours.codeblock.background};
+	border: 2px solid ${props => props.theme.colours.codeblock.border};
+	padding: 10px;
+	margin: 8px;
+	border-radius: 8px;
+	overflow-x: auto;
+`

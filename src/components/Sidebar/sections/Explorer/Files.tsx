@@ -22,7 +22,7 @@ const Files = () => {
 					closedIcon: <Icon extensionType='folder-markdown' />,
 					open: false,
 					children: (allPosts ?? []).map(slug => ({
-						name: slug,
+						name: `${slug}.md`,
 						icon: <Icon extensionType='md' />,
 						link: `/blog/${slug}`
 					}))

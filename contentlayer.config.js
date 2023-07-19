@@ -46,12 +46,6 @@ const Post = defineDocumentType(() => ({
 			type: 'string',
 			required: true
 		}
-	},
-	computedFields: {
-		slug: {
-			type: 'string',
-			resolve: doc => doc._raw.sourceFileName.replace(/\.mdx/, '')
-		}
 	}
 }))
 

@@ -25,7 +25,7 @@ interface StaticProps extends GetStaticPathsContext {
 }
 
 export const getStaticProps = ({ params: { slug } }: StaticProps) => {
-	const post = allPosts.find(post => post._raw.flattenedPath === slug)
+	const post = allPosts.find(post => post.slug === slug)
 
 	if (!post) return {
 		notFound: true
@@ -43,8 +43,7 @@ export const getStaticPaths = () => {
 		.filter(post => !post.draft)
 		.map(post => ({
 			params: {
-				// TODO fix /en prefixing the path
-				slug: post._raw.flattenedPath
+				slug: post.slug
 			}
 		}))
 

@@ -20,10 +20,6 @@ const nextConfig = {
 		styledComponents: true
 	},
 	swcMinify: true,
-	i18n: {
-		locales: ['en'],
-		defaultLocale: 'en'
-	},
 	images: {
 		remotePatterns: [
 			{

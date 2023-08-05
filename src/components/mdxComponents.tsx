@@ -5,9 +5,9 @@ import { type CSSProperties,type DOMAttributes } from 'react'
 import { useSettingsStore } from '~/state/useSettingsStore'
 import { themes } from '~/themes/themes'
 
-import { CodeBlockPre, Header, Text } from './EditorComponents'
+import { Code, CodeBlockPre, Header, ListItem, Text } from './EditorComponents'
 
-const listPadding: CSSProperties = {
+const listStyling: CSSProperties = {
 	paddingLeft: '36px'
 }
 
@@ -15,7 +15,7 @@ type CodeData<T extends HTMLElement = HTMLElement> = (DOMAttributes<T> & { 'data
 
 export const styleSize = (height: number, font: number, fixHeight = true): CSSProperties => ({
 	minHeight: fixHeight ? `${height}px` : undefined,
-	lineHeight: `${font}px`,
+	lineHeight: `${Math.ceil((font - 10) / 20) * 20}px`,
 	fontSize: `${font}px`
 })
 
@@ -30,9 +30,9 @@ const mdxComponents: MDXComponents = {
 			>{children}</Link>
 	},
 
-	ul: ({ children }) => <ul style={listPadding}>{children}</ul>,
+	ul: ({ children }) => <ul style={listStyling}>{children}</ul>,
 
-	ol: ({ children }) => <ol style={listPadding}>{children}</ol>,
+	ol: ({ children }) => <ol style={listStyling}>{children}</ol>,
 
 	h1: ({ id, children }) => <Header type='h1' id={id}>{children}</Header>,
 	h2: ({ id, children }) => <Header type='h2' id={id}>{children}</Header>,
@@ -43,11 +43,11 @@ const mdxComponents: MDXComponents = {
 
 	p: ({ children }) => <Text>{children}</Text>,
 
-	li: ({ children }) => <li style={styleSize(20, 18)}>{children}</li>,
+	li: ({ children }) => <ListItem>{children}</ListItem>,
 
 	code: ({ children, ...data }) => {
 		const parsedData = data as CodeData
-		return <code data-language={parsedData['data-language']} data-theme={parsedData['data-theme']}>{children}</code>
+		return <Code data-language={parsedData['data-language']} data-theme={parsedData['data-theme']}>{children}</Code>
 	},
 	pre: ({ children, ...data }) => {
 		const parsedData = data as CodeData<HTMLPreElement>

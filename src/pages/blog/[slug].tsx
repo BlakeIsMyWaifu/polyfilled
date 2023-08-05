@@ -3,6 +3,7 @@ import { type GetStaticPathsContext, type InferGetStaticPropsType, type NextPage
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
 import Editor from '~/components/Editor'
+import { Header } from '~/components/EditorComponents'
 import mdxComponents from '~/components/mdxComponents'
 
 type BlogSlugProps = InferGetStaticPropsType<typeof getStaticProps>
@@ -13,6 +14,8 @@ const BlogSlug: NextPage<BlogSlugProps> = ({ post }: BlogSlugProps) => {
 
 	return (
 		<Editor>
+			<Header type='h1'>{post.title}</Header>
+
 			<MDXContent components={mdxComponents} />
 		</Editor>
 	)

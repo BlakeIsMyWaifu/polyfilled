@@ -51,7 +51,7 @@ interface Children {
 	children: ReactNode;
 }
 
-export const Text = ({ children }: Children) => <p style={styleSize(20, 20, false)}>{children}</p>
+export const Text = ({ children }: Children) => <p style={styleSize(20, 18, false)}>{children}</p>
 
 export const CodeBlockPre = styled.pre`
 	background-color: ${props => props.theme.colours.codeblock.background};
@@ -61,3 +61,22 @@ export const CodeBlockPre = styled.pre`
 	border-radius: 8px;
 	overflow-x: auto;
 `
+
+export const Code = styled.code`
+	background-color: ${props => props.theme.colours.codeblock.background};
+	border-radius: 4px;
+	padding: 0 4px;
+	margin: 0 -4px;
+`
+
+const ListItemStyle = styled.li`
+	:not(:last-child) {
+		margin-bottom: 20px;
+	}
+`
+
+export const ListItem = ({ children }: Children) => {
+	return <ListItemStyle style={styleSize(20, 18)}>
+		{children}
+	</ListItemStyle>
+}

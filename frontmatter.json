@@ -86,11 +86,12 @@
       "id": "authors",
       "options": [
         "Joel Dohm-Karatjas",
-        "Ishaan"
+        "Ishaan Saini"
       ]
     }
   ],
   "frontMatter.taxonomy.tags": [
+    "react",
     "typescript"
   ],
   "frontMatter.taxonomy.categories": [

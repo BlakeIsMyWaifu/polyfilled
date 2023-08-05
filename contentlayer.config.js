@@ -45,6 +45,18 @@ const Post = defineDocumentType(() => ({
 		slug: {
 			type: 'string',
 			required: true
+		},
+		summary: {
+			type: 'string',
+			required: true
+		},
+		images: {
+			type: 'list',
+			of: { type: 'string' }
+		},
+		keywords: {
+			type: 'list',
+			of: { type: 'string' }
 		}
 	}
 }))

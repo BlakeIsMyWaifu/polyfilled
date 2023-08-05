@@ -3,6 +3,8 @@ import { mkdir, writeFile } from 'node:fs/promises'
 
 import { allPosts } from '../.contentlayer/generated/index.mjs'
 
+// TODO setup watching for file name changes
+
 const allPostSlugs = allPosts
 	.filter(post => !post.draft)
 	.map(post => post.slug)

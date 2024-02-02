@@ -1,0 +1,155 @@
+---
+title: ReactElement vs ReactNode
+description: What is the difference between a JSX.Element, ReactElement and a ReactNode and why does it matter?
+date: 2023-07-28T08:00:00.654Z
+authors:
+  - Joel Dohm-Karatjas
+preview: ""
+draft: false
+tags:
+  - typescript
+  - react
+categories:
+  - blog
+slug: reactelement-reactnode
+summary: ""
+images: []
+keywords:
+  - react
+  - reactelement
+  - typescript
+  - reactnode
+---
+
+## Short Summary
+
+- `JSX.Element` and `React.ReactElement` are (almost) the exact same thing.
+- `React.ReactElement` represents a single component or an HTML element.
+- `React.ReactNode` represents anything that can be put into the virtual DOM.
+- Use `React.ReactNode` when typing props and return types
+
+```tsx
+const ExampleElement = () => {
+  return <div>Hello World</div>
+  //     ^ This is a ReactElement
+}
+
+const ExampleNode = () => {
+  return (
+    <div>
+      <h1>Title</h1>
+      <ExampleElement />
+    </div>
+  )
+  // ^ This is a ReactNode
+}
+```
+
+## Complete Explanation
+
+For simplicity from now on we won't include the React namespace meaning `React.ReactElement` will become `ReactElement`.
+
+### What is an Element in JSX
+
+For better or for worse, JSX isn't inbuilt into regular JavaScript.
+JSX is just sematic sugar that has to be transpiled into JavaScript so that our browsers can interpret.
+A JSX Element, much like everything else in JavaScript, is an object.
+
+```ts
+const testElement = React.createElement('div', { test: 'props' }, 'Inner Text')
+
+console.log(testElement)
+
+const logOutput = {
+  $$typeof: [object Symbol] { ... },
+  _owner: null,
+  _store: { ... },
+  key: null,
+  props: {
+    children: 'Inner Text',
+    test: 'props'
+  },
+  ref: null,
+  type: 'div'
+}
+```
+
+When we use either the `JSX.Element` or `ReactElement` type, it represents a single HTML Element.
+It is the building blocks of JSX and React.
+
+### Differences between JSX.Element and ReactElement
+
+First we'll look at the type definition of a `ReactElement` which can be found in the [DefinitelyTyped package](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/index.d.ts#L163)
+```ts
+interface ReactElement<
+  P = any,
+  T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>
+> {
+  type: T;
+  props: P;
+  key: Key | null;
+}
+```
+
+Now we'll look at the definition of a `JSX.Element`.
+```ts
+declare global {
+  namespace JSX {
+    interface Element extends React.ReactElement<any, any> { }
+  }
+}
+```
+
+The key difference is `ReactElement` takes two generic arguments whereas `JSX.Element` doesn't take any so they'll always be `any`.
+```ts
+type TestJSX = JSX.Element<{test: string}>; // ! error
+type TestREACT = React.ReactElement<{test: string}>; // works fine
+```
+
+### What is a ReactNode
+
+A `ReactNode` is everything that React can render.
+Once again we can look at the type definition in the [DefinitelyTyped package](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b23a36e669fa127d1035e22ca93faab85b98e49f/types/react/index.d.ts#L263)
+```ts
+declare namespace React {
+  type ReactNode =
+    | ReactElement
+    | string
+    | number
+    | Iterable<ReactNode>
+    | ReactPortal
+    | boolean
+    | null
+    | undefined
+    | DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES[keyof DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES];
+}
+```
+`ReactNode` is a union type of lots of different types, one of which being `ReactElement`.
+`Iterable<ReactNode>` is better known as `ReactFragment` which lets you group children without effecting the DOM.
+It should go without saying that the last type can be safely ignored.
+It's used only for internal experimental updates.
+
+```tsx
+interface Props {
+  children: ReactNode;
+}
+
+const ExampleComponent = ({ children }: Props) => {
+  return <div>{children}</div>;
+};
+
+const Example = () => {
+  return (
+    <div>
+      <ExampleComponent>This is a string</ExampleComponent>
+
+      <ExampleComponent>{100}</ExampleComponent>
+
+      <ExampleComponent>
+        <ExampleComponent />
+      </ExampleComponent>
+    </div>
+  )
+}
+```
+Because we used `ReactNode`, the children can be anything within JSX.
